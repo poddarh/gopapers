@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Quick Paper Access</title>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"/>
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<style>
+html, body { height: 100% }
+.title{
+	font-size:20px;
+	font-weight:bold;
+}
+</style>
+<script>
+$(function() {
+	$( ".radio" ).buttonset();
+	$( "input[type=submit], a, button" ).button();
+});
+var baseXP = "http://papers.xtremepapers.com/CIE/Cambridge International A and AS Level/";
+var baseMP = "http://maxpapers.com/wp-content/uploads/2012/11/";
+function getSubjectPage(){
+	document.getElementById("paperFrame").src = baseXP+getValue("subject");
+}
+function getPaper(openInNewTab){
+	var year = getValue("year");
+	var session = getValue("session");
+	var subject = getValue("subject");
+	var type = getValue("type");
+	var subjectCode = subject.substring(subject.length-5,subject.length-1);
+	
+	var fileName = subjectCode+"_"+session+year+"_"+type;
+	if(type == "er" || type == "gt"){
+		fileName += ".pdf";
+	}else{
+		var paper;
+		if(!(year == 13 && session == 'w') && (year > 9 || (year == 9 && session == 'w')))
+			paper = getValue("paper")+""+getValue("varient");
+		else
+			paper = getValue("paper");
+		fileName +="_"+paper+".pdf";
+	}
+	var baseURL;
+	if(year == 13)
+		baseURL=baseMP;
+	else
+		baseURL=baseXP+subject+"/";
+	if(openInNewTab)
+		window.open(baseURL + fileName , '_blank');
+	else{
+		var iframe = document.getElementById("paperFrame");
+		iframe.src = baseURL + fileName ;
+		iframe.style.display = 'block';
+		iframe.scrollIntoView(true);
+	}
+}
+function getValue(id){
+	var selectedVal = "";
+	var selected = $("input[type='radio'][name='"+id+"']:checked");
+	if (selected.length > 0) {
+		selectedVal = selected.val();
+	}
+	return selectedVal;
+}
+</script>
+
+</head>
+<body style="width:95%;padding-left:2%;padding-right:2%">
+   	   <form id="form1" name="form1" method="post" action="">
+          <table border="0" cellspacing="10px">
+            <tr>
+              <td align="right" ><label for="subject" class="title">Subject</label></td>
+              <td><div class="radio">
+                 <input type="radio" id="radio_subject_Accounting_9706" name="subject" value="Accounting (9706)"><label for="radio_subject_Accounting_9706">Accounting</label>
+                 <input type="radio" id="radio_subject_Business_Studies_9707" name="subject" value="Business Studies (9707)"><label for="radio_subject_Business_Studies_9707">Business Studies</label>
+                <input type="radio" id="radio_subject_Biology_9700" name="subject" value="Biology (9700)"><label for="radio_subject_Biology_9700">Biology</label>
+                <input type="radio" id="radio_subject_Chemistry_9701" name="subject" value="Chemistry (9701)"><label for="radio_subject_Chemistry_9701">Chemistry</label>
+                <input type="radio" id="radio_subject_Computing_9691" name="subject" value="Computing (9691)"><label for="radio_subject_Computing_9691">Computing</label>
+                 <input type="radio" id="radio_subject_Economics_9708" name="subject" value="Economics (9708)"><label for="radio_subject_Economics_9708">Economics</label>
+                <input type="radio" id="radio_subject_English_Language_8693" name="subject" value="English - Language (8693)"><label for="radio_subject_English_Language_8693">English</label>
+                 <input type="radio" id="radio_subject_General_Paper_8004" name="subject" value="General Paper 8004 (8004)"><label for="radio_subject_General_Paper_8004">General Paper</label>
+                 <input type="radio" id="radio_subject_Global_Perspectives_8987" name="subject" value="Global Perspectives (8987)"><label for="radio_subject_Global_Perspectives_8987">Global Perspectives</label>
+                 <input type="radio" id="radio_subject_History_9697" name="subject" value="History (9697)"><label for="radio_subject_History_9697">History</label>
+                 <input type="radio" id="radio_subject_English_Literature_9695" name="subject" value="English - Literature (9695)"><label for="radio_subject_English_Literature_9695">Literature</label>
+                <input type="radio" id="radio_subject_Mathematics_9709" name="subject" value="Mathematics (9709)" checked="checked"><label for="radio_subject_Mathematics_9709">Maths</label>
+                <input type="radio" id="radio_subject_Physics_9702" name="subject" value="Physics (9702)"><label for="radio_subject_Physics_9702">Physics</label>
+             
+              </div></td>
+            </tr>
+            <tr>
+              <td align="right"><label for="year" class="title">Year</label></td>
+              <td><div class="radio">
+				<input type="radio" id="radio_year_03" name="year" value="03"><label for="radio_year_03">2003</label>
+                <input type="radio" id="radio_year_04" name="year" value="04"><label for="radio_year_04">2004</label>
+                <input type="radio" id="radio_year_05" name="year" value="05"><label for="radio_year_05">2005</label>
+                <input type="radio" id="radio_year_06" name="year" value="06"><label for="radio_year_06">2006</label>
+                <input type="radio" id="radio_year_07" name="year" value="07"><label for="radio_year_07">2007</label>
+                <input type="radio" id="radio_year_08" name="year" value="08"><label for="radio_year_08">2008</label>
+                <input type="radio" id="radio_year_09" name="year" value="09"><label for="radio_year_09">2009</label>
+                <input type="radio" id="radio_year_10" name="year" value="10"><label for="radio_year_10">2010</label>
+                <input type="radio" id="radio_year_11" name="year" value="11"><label for="radio_year_11">2011</label>
+                <input type="radio" id="radio_year_12" name="year" value="12" checked="checked"><label for="radio_year_12">2012</label>
+				<input type="radio" id="radio_year_13" name="year" value="13"><label for="radio_year_13">2013</label>
+              </div></td>
+            </tr>
+            <tr>
+              <td align="right"><label for="session" class="title">Session</label></td>
+              <td><div class="radio">
+                <input type="radio" id="radio_session_s" name="session" value="s" checked="checked"><label for="radio_session_s">May/June</label>
+                <input type="radio" id="radio_session_w" name="session" value="w"><label for="radio_session_w">October/November</label>
+              </div></td>
+            </tr>
+            <tr>
+              <td align="right"><label for="type" class="title">Type</label></td>
+              <td><div class="radio">
+<input type="radio" id="radio_type_qp" name="type" value="qp"><label for="radio_type_qp">Question Paper</label>
+                <input type="radio" id="radio_type_ms" name="type" value="ms" checked="checked"><label for="radio_type_ms">Marking Scheme</label>
+                <input type="radio" id="radio_type_gt" name="type" value="gt"><label for="radio_type_gt">Grading Threshold</label>
+                <input type="radio" id="radio_type_er" name="type" value="er"><label for="radio_type_er">Examiner Report</label>
+              </div></td>
+            </tr>
+            <tr>
+              <td align="right"><label for="paper" class="title">Paper</label></td>
+              <td><div class="radio">
+                <input type="radio" id="radio_paper_1" name="paper" value="1"><label for="radio_paper_1">1</label>
+                <input type="radio" id="radio_paper_2" name="paper" value="2"><label for="radio_paper_2">2</label>
+                <input type="radio" id="radio_paper_3" name="paper" value="3" checked="checked"><label for="radio_paper_3">3</label>
+                <input type="radio" id="radio_paper_4" name="paper" value="4"><label for="radio_paper_4">4</label>
+                <input type="radio" id="radio_paper_5" name="paper" value="5"><label for="radio_paper_5">5</label>
+                <input type="radio" id="radio_paper_6" name="paper" value="6"><label for="radio_paper_6">6</label>
+              </div></td>
+            </tr>
+            <tr>
+              <td align="right"><label for="varient" class="title">Varient</label></td>
+              <td><div class="radio">
+                <input type="radio" id="radio_varient_1" name="varient" value="1"><label for="radio_varient_1">1</label>
+                <input type="radio" id="radio_varient_2" name="varient" value="2" checked="checked"><label for="radio_varient_2">2</label>
+                <input type="radio" id="radio_varient_3" name="varient" value="3"><label for="radio_varient_3">3</label>
+              </div></td>
+            </tr>
+          </table>
+          <br />
+          
+      </form>
+      <button id="submit" onclick="getPaper(false)" >Open Paper</button>&nbsp;&nbsp;<button id="submit" onclick="getPaper(true)" >Open Paper in new tab</button>
+      <br />
+
+      <a href="#" onclick="getSubjectPage()" style="margin:10px 0 10px 0">Open Subject Page</a><br />
+      </span>
+ 
+<iframe id="paperFrame" src="http://papers.xtremepapers.com/CIE/Cambridge International A and AS Level/" width="100%" height="90%"></iframe>
+ <div style="text-align:center;font-size:24px;margin:8px;width:100%" >Scroll up to open another paper.</div>
+
+ 
+</body>
+</html>
