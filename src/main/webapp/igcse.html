@@ -19,12 +19,12 @@ $(function() {
 	$( ".radio" ).buttonset();
 	$( "input[type=submit], a, button" ).button();
 });
-var baseXP = "http://papers.xtremepapers.com/CIE/Cambridge International A and AS Level/";
+var baseXP = "http://papers.xtremepapers.com/CIE/Cambridge IGCSE/";
 function getSubjectPage(){
 	document.getElementById("paperFrame").src = baseXP+getValue("subject");
 }
 function changeBoard(){
-	window.open("igcse.html","_self");
+	window.open("paper.html","_self");
 }
 function getPaper(openInNewTab){
 	var year = getValue("year");
@@ -38,7 +38,7 @@ function getPaper(openInNewTab){
 		fileName += ".pdf";
 	}else{
 		var paper;
-		if((year > 9 || (year == 9 && session == 'w')))
+		if(subjectCode!=0549 && (year > 9 || (year == 9 && session == 'w')))
 			paper = getValue("paper")+""+getValue("varient");
 		else
 			paper = getValue("paper");
@@ -68,43 +68,37 @@ function getValue(id){
 <form id="form1" name="form1" method="post" action="">
   <table border="0" cellspacing="10px">
     <tr>
-      <td align="right" ><label for="subject" class="title">Subject</label></td>
+      <td align="right" ><label for="subject" class="title">Board</label></td>
       <td><div class="radio">
-          <input type="radio" id="radio_board_IGCSE" name="board" value="IGCSE" onClick="changeBoard()">
+          <input type="radio" id="radio_board_IGCSE" name="board" value="IGCSE" checked="checked">
           <label for="radio_board_IGCSE">IGCSE</label>
-          <input type="radio" id="radio_board_ALevel" name="board" value="AS & A Level" checked="checked">
+          <input type="radio" id="radio_board_ALevel" name="board" value="AS & A Level" onClick="changeBoard()" >
           <label for="radio_board_ALevel">AS & A Level</label>
         </div></td>
     </tr>
     <tr>
       <td align="right" ><label for="subject" class="title">Subject</label></td>
       <td><div class="radio">
-          <input type="radio" id="radio_subject_Accounting_9706" name="subject" value="Accounting (9706)">
-          <label for="radio_subject_Accounting_9706">Accounting</label>
-          <input type="radio" id="radio_subject_Business_Studies_9707" name="subject" value="Business Studies (9707)">
-          <label for="radio_subject_Business_Studies_9707">Business Studies</label>
-          <input type="radio" id="radio_subject_Biology_9700" name="subject" value="Biology (9700)">
-          <label for="radio_subject_Biology_9700">Biology</label>
-          <input type="radio" id="radio_subject_Chemistry_9701" name="subject" value="Chemistry (9701)">
-          <label for="radio_subject_Chemistry_9701">Chemistry</label>
-          <input type="radio" id="radio_subject_Computing_9691" name="subject" value="Computing (9691)">
-          <label for="radio_subject_Computing_9691">Computing</label>
-          <input type="radio" id="radio_subject_Economics_9708" name="subject" value="Economics (9708)">
-          <label for="radio_subject_Economics_9708">Economics</label>
-          <input type="radio" id="radio_subject_English_Language_8693" name="subject" value="English - Language (8693)">
-          <label for="radio_subject_English_Language_8693">English</label>
-          <input type="radio" id="radio_subject_General_Paper_8004" name="subject" value="General Paper 8004 (8004)">
-          <label for="radio_subject_General_Paper_8004">General Paper</label>
-          <input type="radio" id="radio_subject_Global_Perspectives_8987" name="subject" value="Global Perspectives (8987)">
-          <label for="radio_subject_Global_Perspectives_8987">Global Perspectives</label>
-          <input type="radio" id="radio_subject_History_9697" name="subject" value="History (9697)">
-          <label for="radio_subject_History_9697">History</label>
-          <input type="radio" id="radio_subject_English_Literature_9695" name="subject" value="English - Literature (9695)">
-          <label for="radio_subject_English_Literature_9695">Literature</label>
-          <input type="radio" id="radio_subject_Mathematics_9709" name="subject" value="Mathematics (9709)" checked="checked">
-          <label for="radio_subject_Mathematics_9709">Maths</label>
-          <input type="radio" id="radio_subject_Physics_9702" name="subject" value="Physics (9702)">
-          <label for="radio_subject_Physics_9702">Physics</label>
+          <input type="radio" id="radio_subject_Accounting" name="subject" value="Accounting (0452)">
+          <label for="radio_subject_Accounting">Accounting</label>
+          <input type="radio" id="radio_subject_Business_Studies" name="subject" value="Business Studies (0450)">
+          <label for="radio_subject_Business_Studies">Business Studies</label>
+          <input type="radio" id="radio_subject_Biology" name="subject" value="Biology (0610)">
+          <label for="radio_subject_Biology">Biology</label>
+          <input type="radio" id="radio_subject_Chemistry" name="subject" value="Chemistry (0620)">
+          <label for="radio_subject_Chemistry">Chemistry</label>
+          <input type="radio" id="radio_subject_Economics" name="subject" value="Economics (0455)">
+          <label for="radio_subject_Economics">Economics</label>
+          <input type="radio" id="radio_subject_English" name="subject" value="English - First Language (0500)">
+          <label for="radio_subject_English">English</label>
+          <input type="radio" id="radio_subject_Global_Perspectives" name="subject" value="Global Perspectives (0457)">
+          <label for="radio_subject_Global_Perspectives">Global Perspectives</label>
+          <input type="radio" id="radio_subject_Hindi" name="subject" value="Hindi as a Second Language (0549)">
+          <label for="radio_subject_Hindi">Hindi</label>
+          <input type="radio" id="radio_subject_Mathematics" name="subject" value="Mathematics (0580)" checked="checked">
+          <label for="radio_subject_Mathematics">Maths</label>
+          <input type="radio" id="radio_subject_Physics" name="subject" value="Physics (0625)">
+          <label for="radio_subject_Physics">Physics</label>
         </div></td>
     </tr>
     <tr>
@@ -161,16 +155,14 @@ function getValue(id){
       <td><div class="radio">
           <input type="radio" id="radio_paper_1" name="paper" value="1">
           <label for="radio_paper_1">1</label>
-          <input type="radio" id="radio_paper_2" name="paper" value="2">
+          <input type="radio" id="radio_paper_2" name="paper" value="2" checked="checked">
           <label for="radio_paper_2">2</label>
-          <input type="radio" id="radio_paper_3" name="paper" value="3" checked="checked">
+          <input type="radio" id="radio_paper_3" name="paper" value="3">
           <label for="radio_paper_3">3</label>
           <input type="radio" id="radio_paper_4" name="paper" value="4">
           <label for="radio_paper_4">4</label>
           <input type="radio" id="radio_paper_5" name="paper" value="5">
           <label for="radio_paper_5">5</label>
-          <input type="radio" id="radio_paper_6" name="paper" value="6">
-          <label for="radio_paper_6">6</label>
         </div></td>
     </tr>
     <tr>
@@ -193,7 +185,7 @@ function getValue(id){
 <br>
 <a href="#" onclick="getSubjectPage()" style="margin:10px 0 10px 0">Open Subject Page</a><br />
 </span>
-<iframe id="paperFrame" src="http://papers.xtremepapers.com/CIE/Cambridge International A and AS Level/" width="100%" height="90%"></iframe>
+<iframe id="paperFrame" src="http://papers.xtremepapers.com/CIE/Cambridge IGCSE/" width="100%" height="90%"></iframe>
 <div style="text-align:center;font-size:24px;margin:8px;width:100%" >Scroll up to open another paper.</div>
 </body>
 </html>
