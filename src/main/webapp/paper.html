@@ -33,18 +33,26 @@ function getPaper(openInNewTab){
 	var type = getValue("type");
 	var subjectCode = subject.substring(subject.length-5,subject.length-1);
 	
-	var fileName = subjectCode+"_"+session+year+"_"+type;
-	if(type == "er" || type == "gt"){
-		fileName += ".pdf";
-	}else{
-		var paper;
-		if((year > 9 || (year == 9 && session == 'w')))
-			paper = getValue("paper")+""+getValue("varient");
-		else
-			paper = getValue("paper");
-		fileName +="_"+paper+".pdf";
+	var	baseURL;
+	var fileName;
+	if(type=="mf9"){
+		baseURL="";
+		fileName="MF9.pdf";
 	}
-	var	baseURL=baseXP+subject+"/";
+	else{
+		fileName = subjectCode+"_"+session+year+"_"+type;
+		if(type == "er" || type == "gt"){
+			fileName += ".pdf";
+		}else{
+			var paper;
+			if((year > 9 || (year == 9 && session == 'w')))
+				paper = getValue("paper")+""+getValue("varient");
+			else
+				paper = getValue("paper");
+			fileName +="_"+paper+".pdf";
+		}
+		baseURL=baseXP+subject+"/";		
+	}
 	if(openInNewTab)
 		window.open(baseURL + fileName , '_blank');
 	else{
@@ -154,6 +162,8 @@ function getValue(id){
           <label for="radio_type_gt">Grading Threshold</label>
           <input type="radio" id="radio_type_er" name="type" value="er">
           <label for="radio_type_er">Examiner Report</label>
+          <input type="radio" id="radio_type_mf9" name="type" value="mf9">
+          <label for="radio_type_mf9">Maths - MF9</label>
         </div></td>
     </tr>
     <tr>
