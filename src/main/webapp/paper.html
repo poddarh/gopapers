@@ -15,17 +15,29 @@ html, body {
 }
 </style>
 <script>
+var paperFrame;
+var paperFrame1;
+var paperFrame2;
+
 $(function() {
 	$( ".radio" ).buttonset();
 	$( "input[type=submit], a, button" ).button();
+	paperFrame = document.getElementById("paperFrame");
+	paperFrame1 = document.getElementById("paperFrame1");
+	paperFrame2 = document.getElementById("paperFrame2");
+
 });
+
 var baseXP = "http://papers.xtremepapers.com/CIE/Cambridge International A and AS Level/";
+
 function getSubjectPage(){
-	document.getElementById("paperFrame").src = baseXP+getValue("subject");
+	openSingleURL(false,baseXP+getValue("subject"));
 }
+
 function changeBoard(){
-	window.open("igcse.html","_self");
+	openSingleURL(true,"igcse.html");
 }
+
 function getPaper(openInNewTab){
 	var year = getValue("year");
 	var session = getValue("session");
@@ -36,32 +48,63 @@ function getPaper(openInNewTab){
 	var	baseURL;
 	var fileName;
 	if(type=="mf9"){
-		baseURL="";
-		fileName="MF9.pdf";
+		openSingleURL("MF9.pdf");
+		
 	}
 	else{
-		fileName = subjectCode+"_"+session+year+"_"+type;
+		URL = baseXP+subject+"/"+subjectCode+"_"+session+year+"_";
 		if(type == "er" || type == "gt"){
-			fileName += ".pdf";
-		}else{
+			URL += type+".pdf";
+			openSingleURL(openInNewTab, URL);
+		}
+		else{
 			var paper;
 			if((year > 9 || (year == 9 && session == 'w')))
 				paper = getValue("paper")+""+getValue("varient");
 			else
 				paper = getValue("paper");
-			fileName +="_"+paper+".pdf";
+			
+			if(type == "qp-ms"){
+				openDoubleURL(openInNewTab, URL+"qp_"+paper+".pdf", URL+"ms_"+paper+".pdf");
+			}
+			else{
+				openSingleURL(openInNewTab, URL+type+"_"+paper+".pdf");
+			}
 		}
-		baseURL=baseXP+subject+"/";		
-	}
-	if(openInNewTab)
-		window.open(baseURL + fileName , '_blank');
-	else{
-		var iframe = document.getElementById("paperFrame");
-		iframe.src = baseURL + fileName ;
-		iframe.style.display = 'block';
-		iframe.scrollIntoView(true);
+				
 	}
 }
+
+function openSingleURL(openInNewTab,url){
+	if(openInNewTab){
+		window.open(url , '_blank');
+	}
+	else{
+		$("#doubleIframe").hide();
+		$("#singleIframe").show();
+		paperFrame.src = url ;
+		paperFrame.style.display = 'block';
+		paperFrame.scrollIntoView(true);
+	}
+}
+
+function openDoubleURL(openInNewTab,url1, url2){
+	if(openInNewTab){
+		window.open(url1 , '_newtab');
+		window.open(url2 , '_newtab2');
+	}
+	else{
+		$("#singleIframe").hide();
+		$("#doubleIframe").show();
+		paperFrame1.src = url1 ;
+		paperFrame2.src = url2 ;
+		paperFrame1.style.display = 'block';
+		paperFrame2.style.display = 'block';
+		paperFrame1.scrollIntoView(true);
+	}
+
+}
+
 function getValue(id){
 	var selectedVal = "";
 	var selected = $("input[type='radio'][name='"+id+"']:checked");
@@ -70,6 +113,7 @@ function getValue(id){
 	}
 	return selectedVal;
 }
+
 </script>
 </head>
 <body style="width:95%;padding-left:2%;padding-right:2%">
@@ -158,6 +202,8 @@ function getValue(id){
           <label for="radio_type_qp">Question Paper</label>
           <input type="radio" id="radio_type_ms" name="type" value="ms" checked="checked">
           <label for="radio_type_ms">Marking Scheme</label>
+          <input type="radio" id="radio_type_qpms" name="type" value="qp-ms">
+          <label for="radio_type_qpms">Question Paper & Marking Scheme</label>
           <input type="radio" id="radio_type_gt" name="type" value="gt">
           <label for="radio_type_gt">Grading Threshold</label>
           <input type="radio" id="radio_type_er" name="type" value="er">
@@ -203,7 +249,13 @@ function getValue(id){
 <br>
 <a href="#" onclick="getSubjectPage()" style="margin:10px 0 10px 0">Open Subject Page</a><br />
 </span>
-<iframe id="paperFrame" src="http://papers.xtremepapers.com/CIE/Cambridge International A and AS Level/" width="100%" height="90%"></iframe>
+<div id="singleIframe" style="height: 90%;width: 100%;">
+	<iframe id="paperFrame" src="http://papers.xtremepapers.com/CIE/Cambridge International A and AS Level/" width="100%" height="100%"></iframe>
+</div>
+<div id="doubleIframe" style="display: none;height: 90%;width: 100%;">
+	<iframe id="paperFrame1" width="49%" height="100%" style="float:left;"></iframe>
+	<iframe id="paperFrame2" width="49%" height="100%" style="float:right;"></iframe>
+</div>
 <div style="text-align:center;font-size:24px;margin:8px;width:100%" >Scroll up to open another paper.</div>
 </body>
 </html>
