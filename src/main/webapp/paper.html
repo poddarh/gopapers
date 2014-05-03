@@ -35,11 +35,7 @@ $(function() {
 	ga('send', 'screenview', {
 		'screenName': 'AS & A Level'
 	});
-
-	$('input:radio').on('click', function() {
-		ga('send', 'event', 'radio', 'click', $(this).attr('name')+' : '+$(this).attr('value'));
-	});
-
+	
 	$("button").on('click', function() {
 		ga('send', 'event', 'button', 'click', $(this).children("span").html());
 	});
@@ -134,6 +130,7 @@ function getValue(id){
 	var selected = $("input[type='radio'][name='"+id+"']:checked");
 	if (selected.length > 0) {
 		selectedVal = selected.val();
+		ga('send', 'event', id, 'change', selected.attr('value'));
 	}
 	return selectedVal;
 }
