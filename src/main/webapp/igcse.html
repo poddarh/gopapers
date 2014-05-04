@@ -24,25 +24,42 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 
 <!-- End Google Analytics -->
 
+var lastGAUpdated = new Date();
 
 $(function() {
 
 	ga('create', 'UA-50628663-1', 'auto');
 
-	ga('send', 'screenview', {
-		'screenName': 'IGCSE'
+	ga('send', 'pageview', {
+		  'page': '/igcse.html',
+		  'title': 'IGCSE'
 	});
 
 	$("button").on('click', function() {
 		ga('send', 'event', 'button', 'click', $(this).children("span").html());
 	});
-
+	
+	lastGAUpdated = new Date();
+	
 	$( ".radio" ).buttonset();
 	$( "input[type=submit], button" ).button();
+	
+	setInterval(function () {
+        if(new Date().getTime()-lastGAUpdated.getTime()>1500000){
+			ga('send', 'event', 'page', 'idle');
+			lastGAUpdated = new Date();
+        }
+    }, 180000);
+	
 });
 var baseXP = "http://papers.xtremepapers.com/CIE/Cambridge IGCSE/";
 function getSubjectPage(){
-	document.getElementById("paperFrame").src = baseXP+getValue("subject");
+	var subject = getValue("subject");
+	ga('send', 'event', 'Subject Page', 'Open Below', subject);
+	lastGAUpdated = new Date();
+
+	document.getElementById("paperFrame").src = baseXP+subject;
+	
 }
 function changeBoard(){
 	window.open("paper.html","_self");
@@ -54,9 +71,11 @@ function getPaper(openInNewTab){
 	var type = getValue("type");
 	var subjectCode = subject.substring(subject.length-5,subject.length-1);
 	
-	ga('send', 'event', 'type', 'change', type);
-	ga('send', 'event', 'subject', 'change', subject);
-	ga('send', 'event', 'session', 'change', session+year);
+	if(openInNewTab)
+		ga('send', 'event', 'Paper', 'Open Below', subject+"|"+type+"|"+session+year);
+	else
+		ga('send', 'event', 'Paper', 'Open in New Tab', subject+"|"+type+"|"+session+year);
+	lastGAUpdated = new Date();
 	
 	var fileName = subjectCode+"_"+session+year+"_"+type;
 	if(type == "er" || type == "gt"){
