@@ -28,7 +28,7 @@ var lastGAUpdated = new Date();
 
 $(function() {
 
-	ga('create', 'UA-50628663-1', 'auto');
+	ga('create', 'UA-50628663-2', 'auto');
 
 	ga('send', 'pageview', {
 		  'page': '/igcse.html',
@@ -55,7 +55,7 @@ $(function() {
 var baseXP = "http://papers.xtremepapers.com/CIE/Cambridge IGCSE/";
 function getSubjectPage(){
 	var subject = getValue("subject");
-	ga('send', 'event', 'Subject Page', 'Open Below', subject);
+	ga('send', 'event', 'subject-page', 'open', subject);
 	lastGAUpdated = new Date();
 
 	document.getElementById("paperFrame").src = baseXP+subject;
@@ -71,10 +71,9 @@ function getPaper(openInNewTab){
 	var type = getValue("type");
 	var subjectCode = subject.substring(subject.length-5,subject.length-1);
 	
-	if(openInNewTab)
-		ga('send', 'event', 'Paper', 'Open Below', subject+"|"+type+"|"+session+year);
-	else
-		ga('send', 'event', 'Paper', 'Open in New Tab', subject+"|"+type+"|"+session+year);
+	ga('send', 'event', 'subject', 'find', subject);
+	ga('send', 'event', 'type', 'find', type);
+	
 	lastGAUpdated = new Date();
 	
 	var fileName = subjectCode+"_"+session+year+"_"+type;
