@@ -38,7 +38,7 @@ $(function() {
 	});
 
 	$( ".radio" ).buttonset();
-	$( "input[type=submit], a, button" ).button();
+	$( "input[type=submit], button" ).button();
 });
 var baseXP = "http://papers.xtremepapers.com/CIE/Cambridge IGCSE/";
 function getSubjectPage(){
@@ -208,12 +208,12 @@ function getValue(id){
   </table>
   <br />
 </form>
-<button id="submit" onclick="getPaper(false)" >Open Below</button>
+<button id="openBelow" onclick="getPaper(false)" >Open Below</button>
 &nbsp;&nbsp;
-<button id="submit" onclick="getPaper(true)" >Open in new tab</button>
+<button id="openNewTab" onclick="getPaper(true)" >Open in new tab</button>
 <br>
-<a href="#" onclick="getSubjectPage()" style="margin:10px 0 10px 0">Open Subject Page Below</a><br />
+<button id="openSubPage" onclick="getSubjectPage()" style="margin:10px 0 10px 0">Open Subject Page Below</button><br />
 </span>
 <iframe id="paperFrame" src="http://papers.xtremepapers.com/CIE/Cambridge IGCSE/" width="100%" height="90%"></iframe>
-<div style="text-align:center;font-size:24px;margin:8px;width:100%" >Scroll up to open another paper. Developed by <a href="mailto:poddar_h@hotmail.com">Harsh Poddar</a></div></body>
+<div style="text-align:center;font-size:24px;margin:8px;width:100%" >Scroll up to open another paper. Developed by <a style="color:grey" href="mailto:poddar_h@hotmail.com">Harsh Poddar</a></div>
 </html>

@@ -41,7 +41,7 @@ $(function() {
 	});
 
 	$( ".radio" ).buttonset();
-	$( "input[type=submit], a, button" ).button();
+	$( "input[type=submit], button" ).button();
 	paperFrame = document.getElementById("paperFrame");
 	paperFrame1 = document.getElementById("paperFrame1");
 	paperFrame2 = document.getElementById("paperFrame2");
@@ -271,11 +271,11 @@ function getValue(id){
   </table>
   <br />
 </form>
-<button id="submit" onclick="getPaper(false)" >Open Below</button>
+<button id="openBelow" onclick="getPaper(false)" >Open Below</button>
 &nbsp;&nbsp;
-<button id="submit" onclick="getPaper(true)" >Open in new tab</button>
+<button id="openNewTab" onclick="getPaper(true)" >Open in new tab</button>
 <br>
-<a href="#" onclick="getSubjectPage()" style="margin:10px 0 10px 0">Open Subject Page Below</a><br />
+<button id="openSubPage" onclick="getSubjectPage()" style="margin:10px 0 10px 0">Open Subject Page Below</button><br />
 </span>
 <div id="singleIframe" style="height: 90%;width: 100%;">
 	<iframe id="paperFrame" src="http://papers.xtremepapers.com/CIE/Cambridge International A and AS Level/" width="100%" height="100%"></iframe>
@@ -284,6 +284,6 @@ function getValue(id){
 	<iframe id="paperFrame1" width="49%" height="100%" style="float:left;"></iframe>
 	<iframe id="paperFrame2" width="49%" height="100%" style="float:right;"></iframe>
 </div>
-<div style="text-align:center;font-size:24px;margin:8px;width:100%" >Scroll up to open another paper. Developed by <a href="mailto:poddar_h@hotmail.com">Harsh Poddar</a></div>
+<div style="text-align:center;font-size:24px;margin:8px;width:100%" >Scroll up to open another paper. Developed by <a style="color:grey" href="mailto:poddar_h@hotmail.com">Harsh Poddar</a></div>
 </body>
 </html>
