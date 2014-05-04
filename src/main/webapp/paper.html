@@ -72,8 +72,7 @@ function getPaper(openInNewTab){
 	var	baseURL;
 	var fileName;
 	if(type=="mf9"){
-		openSingleURL("MF9.pdf");
-		
+		openSingleURL(openInNewTab,"MF9.pdf");
 	}
 	else{
 		URL = baseXP+subject+"/"+subjectCode+"_"+session+year+"_";
