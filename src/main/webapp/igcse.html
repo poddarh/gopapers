@@ -54,6 +54,10 @@ function getPaper(openInNewTab){
 	var type = getValue("type");
 	var subjectCode = subject.substring(subject.length-5,subject.length-1);
 	
+	ga('send', 'event', 'type', 'change', type);
+	ga('send', 'event', 'subject', 'change', subject);
+	ga('send', 'event', 'session', 'change', session+year);
+	
 	var fileName = subjectCode+"_"+session+year+"_"+type;
 	if(type == "er" || type == "gt"){
 		fileName += ".pdf";
@@ -80,7 +84,6 @@ function getValue(id){
 	var selected = $("input[type='radio'][name='"+id+"']:checked");
 	if (selected.length > 0) {
 		selectedVal = selected.val();
-		ga('send', 'event', id, 'change', selected.attr('value'));
 	}
 	return selectedVal;
 }
@@ -185,6 +188,10 @@ function getValue(id){
           <label for="radio_paper_4">4</label>
           <input type="radio" id="radio_paper_5" name="paper" value="5">
           <label for="radio_paper_5">5</label>
+          <input type="radio" id="radio_paper_6" name="paper" value="6">
+          <label for="radio_paper_6">6</label>
+          <input type="radio" id="radio_paper_7" name="paper" value="7">
+          <label for="radio_paper_7">7</label>
         </div></td>
     </tr>
     <tr>
@@ -201,13 +208,12 @@ function getValue(id){
   </table>
   <br />
 </form>
-<button id="submit" onclick="getPaper(false)" >Open Paper</button>
+<button id="submit" onclick="getPaper(false)" >Open Below</button>
 &nbsp;&nbsp;
-<button id="submit" onclick="getPaper(true)" >Open Paper in new tab</button>
+<button id="submit" onclick="getPaper(true)" >Open in new tab</button>
 <br>
-<a href="#" onclick="getSubjectPage()" style="margin:10px 0 10px 0">Open Subject Page</a><br />
+<a href="#" onclick="getSubjectPage()" style="margin:10px 0 10px 0">Open Subject Page Below</a><br />
 </span>
 <iframe id="paperFrame" src="http://papers.xtremepapers.com/CIE/Cambridge IGCSE/" width="100%" height="90%"></iframe>
-<div style="text-align:center;font-size:24px;margin:8px;width:100%" >Scroll up to open another paper.</div>
-</body>
+<div style="text-align:center;font-size:24px;margin:8px;width:100%" >Scroll up to open another paper. Developed by <a href="mailto:poddar_h@hotmail.com">Harsh Poddar</a></div></body>
 </html>
