@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"/>
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script src="jquery.cookie.js"></script>
 <style>
 html, body {
 	height: 100%
@@ -31,6 +32,20 @@ var paperFrame1;
 var paperFrame2;
 
 $(function() {
+	
+	if($.cookie("lastUpdate")==null || $.cookie("lastUpdate") < 1){
+		$( "#dialog-message" ).dialog({
+	      modal: true,
+	      width: '500px',
+	      buttons: {
+	        Ok: function() {
+	          $( this ).dialog( "close" );
+	        }
+	      }
+	    });
+	}
+	
+	$.cookie("lastUpdate", '1', { expires: 365 });
 	
 	ga('create', 'UA-50628663-2', 'auto');
 
@@ -130,8 +145,8 @@ function openSingleURL(openInNewTab,url){
 
 function openDoubleURL(openInNewTab,url1, url2){
 	if(openInNewTab){
-		window.open(url1 , '_blank');
-		window.open(url2 , '_blank');
+	    window.open(url1, "window1", "width="+(screen.width/2-10)+",height="+(screen.height-120)+",scrollbars=yes");
+	    window.open(url2, "window2", "width="+(screen.width/2-10)+",height="+(screen.height-120)+",scrollbars=yes,left="+(screen.width/2+10));
 	}
 	else{
 		$("#singleIframe").hide();
@@ -157,6 +172,14 @@ function getValue(id){
 </script>
 </head>
 <body style="width:95%;padding-left:2%;padding-right:2%">
+
+<div id="dialog-message" title="Update" style="display:none">
+  <p>
+    <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
+    Open in new tab for QP & MS is updated.<br/>Now opens 2 parallel windows.
+  </p>
+</div>
+
 <form id="form1" name="form1" method="post" action="">
   <table border="0" cellspacing="10px">
     <tr>
