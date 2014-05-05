@@ -61,7 +61,7 @@ $(function() {
 	lastGAUpdated = new Date();
 
 	$( ".radio" ).buttonset();
-	$( "input[type=submit], button" ).button();
+	$( "input[type=submit], .button, button" ).button();
 	paperFrame = document.getElementById("paperFrame");
 	paperFrame1 = document.getElementById("paperFrame1");
 	paperFrame2 = document.getElementById("paperFrame2");
@@ -313,8 +313,9 @@ function getValue(id){
 <button id="openBelow" onclick="getPaper(false)" >Open Below</button>
 &nbsp;&nbsp;
 <button id="openNewTab" onclick="getPaper(true)" >Open in new tab</button>
-<br>
-<button id="openSubPage" onclick="getSubjectPage()" style="margin:10px 0 10px 0">Open Subject Page Below</button><br />
+<br/>
+<div style="float: right;"><strong>Short Link: </strong><a class="button" href="http://tinyurl.com/ciepaper">tinyurl.com/ciepaper</a></div>
+<button id="openSubPage" onclick="getSubjectPage()" style="margin:10px 0 10px 0">Open Subject Page Below</button><br/>
 </span>
 <div id="singleIframe" style="height: 90%;width: 100%;">
 	<iframe id="paperFrame" src="http://papers.xtremepapers.com/CIE/Cambridge International A and AS Level/" width="100%" height="100%"></iframe>

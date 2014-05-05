@@ -42,7 +42,7 @@ $(function() {
 	lastGAUpdated = new Date();
 	
 	$( ".radio" ).buttonset();
-	$( "input[type=submit], button" ).button();
+	$( "input[type=submit], .button, button" ).button();
 	
 	setInterval(function () {
         if(new Date().getTime()-lastGAUpdated.getTime()>1500000){
@@ -229,7 +229,8 @@ function getValue(id){
 <button id="openBelow" onclick="getPaper(false)" >Open Below</button>
 &nbsp;&nbsp;
 <button id="openNewTab" onclick="getPaper(true)" >Open in new tab</button>
-<br>
+<br/>
+<div style="float: right;"><strong>Short Link: </strong><a class="button" href="http://tinyurl.com/igcsepaper">tinyurl.com/igcsepaper</a></div>
 <button id="openSubPage" onclick="getSubjectPage()" style="margin:10px 0 10px 0">Open Subject Page Below</button><br />
 </span>
 <iframe id="paperFrame" src="http://papers.xtremepapers.com/CIE/Cambridge IGCSE/" width="100%" height="90%"></iframe>
