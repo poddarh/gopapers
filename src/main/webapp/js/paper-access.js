@@ -16,7 +16,7 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 
 $(function() {
 	
-	if($.cookie(exam+"-lastUpdate")==null || $.cookie("lastUpdate") < 1){
+	if($.cookie(exam+"-lastUpdate")==null || $.cookie(exam+"-lastUpdate") < 1){
 		$( "#update-message-1" ).dialog({
 	      modal: true,
 	      width: '500px',
@@ -28,7 +28,7 @@ $(function() {
 	    });
 	}
 	
-	$.cookie("lastUpdate", '1', { expires: 365 });
+	$.cookie(exam+"-lastUpdate", '1', { expires: 365 });
 	
 	ga('create', 'UA-50628663-2', 'auto');
 
