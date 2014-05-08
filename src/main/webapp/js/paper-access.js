@@ -158,7 +158,7 @@ function getPaper(openInNewTab){
 	else{
 		var paper;
 		
-		var nonVarientSubjects = [0549];
+		var nonVarientSubjects = [9679,8779,8679,9704,9631,9011,9687,8687,8058,9014,8281,9688,8688,9693,9703,8780,9718,8672,9689,8689,9690,8690,9676,8686,9686,0512,0549];
 		var varientValid = $.grep( nonVarientSubjects, function( n, i ) {
 			  return subjectCode == n;
 		});
