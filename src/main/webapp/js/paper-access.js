@@ -76,7 +76,9 @@ $(function() {
 	      width: '500px',
 	      buttons: {
 	        Save: function() {
-	        	$.cookie(exam+"-subjects", $("#subject-selector option:selected").map(function(){ return this.value }).get().join(","), { expires: 365 });
+	        	var str = $("#subject-selector option:selected").map(function(){ return this.value }).get().join(",");
+	        	$.cookie(exam+"-subjects", str, { expires: 365 });
+	        	ga('send', 'event', 'subjects', 'save',exam+': '+str);
 	        	$( this ).dialog( "close" );
 	        	location.reload();
 	        }
@@ -159,10 +161,13 @@ function getPaper(openInNewTab){
 		var paper;
 		
 		var nonVarientSubjects = [9679,8779,8679,9704,9631,9011,9687,8687,8058,9014,8281,9688,8688,9693,9703,8780,9718,8672,9689,8689,9690,8690,9676,8686,9686,0512,0549];
-		var varientValid = $.grep( nonVarientSubjects, function( n, i ) {
-			  return subjectCode == n;
+		var varientValid = true;
+		$.each(nonVarientSubjects, function(index, value) {
+			if(subjectCode==value){
+				varientValid = false;
+				return false;
+			}
 		});
-		
 		if(varientValid && (year > 9 || (year == 9 && session == 'w')))
 			paper = getValue("paper")+""+getValue("varient");
 		else
