@@ -134,9 +134,9 @@ function getSubjectPage(){
 function changeBoard(){
 	
 	if(exam=="IGCSE")
-		window.window.top.location.href = "./";
+		window.window.top.location.href = "http://gopapers.net/";
 	else
-		window.window.top.location.href = "./igcse.html";
+		window.window.top.location.href = "http://gopapers.net/igcse.html";
 }
 
 function getPaper(openInNewTab){
