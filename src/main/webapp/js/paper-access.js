@@ -16,8 +16,8 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 
 $(function() {
 	
-	if($.cookie(exam+"-lastUpdate")==null || $.cookie(exam+"-lastUpdate") < 1){
-		$( "#update-message-1" ).dialog({
+	if($.cookie(exam+"-lastUpdate")==null || $.cookie(exam+"-lastUpdate") < 2){
+		$( "#update-message" ).dialog({
 	      modal: true,
 	      width: '500px',
 	      buttons: {
@@ -28,7 +28,7 @@ $(function() {
 	    });
 	}
 	
-	$.cookie(exam+"-lastUpdate", '1', { expires: 365 });
+	$.cookie(exam+"-lastUpdate", '2', { expires: 365 });
 	
 	ga('create', 'UA-50628663-2', 'auto');
 
@@ -78,7 +78,7 @@ $(function() {
 	        Save: function() {
 	        	var str = $("#subject-selector option:selected").map(function(){ return this.value }).get().join(",");
 	        	$.cookie(exam+"-subjects", str, { expires: 365 });
-	        	ga('send', 'event', 'subjects', 'save',exam+': '+str);
+	        	ga('send', 'event', 'subjects', 'save',exam);
 	        	$( this ).dialog( "close" );
 	        	location.reload();
 	        }
@@ -96,7 +96,7 @@ $(function() {
 	paperFrame = document.getElementById("paperFrame");
 	paperFrame1 = document.getElementById("paperFrame1");
 	paperFrame2 = document.getElementById("paperFrame2");
-	
+		
 	setInterval(function () {
         if(new Date().getTime()-lastGAUpdated.getTime()>1500000){
 			ga('send', 'event', 'page', 'idle');
@@ -132,10 +132,11 @@ function getSubjectPage(){
 }
 
 function changeBoard(){
+	
 	if(exam=="IGCSE")
-		window.open("paper.html","_self");
+		window.window.top.location.href = "./";
 	else
-		window.open("igcse.html","_self");
+		window.window.top.location.href = "./igcse.html";
 }
 
 function getPaper(openInNewTab){
@@ -160,16 +161,16 @@ function getPaper(openInNewTab){
 	else{
 		var paper;
 		
-		var nonVarientSubjects = [9679,8779,8679,9704,9631,9011,9687,8687,8058,9014,8281,9688,8688,9693,9703,8780,9718,8672,9689,8689,9690,8690,9676,8686,9686,0512,0549];
-		var varientValid = true;
-		$.each(nonVarientSubjects, function(index, value) {
+		var nonvariantSubjects = [9679,8779,8679,9704,9631,9011,9687,8687,8058,9014,8281,9688,8688,9693,9703,8780,9718,8672,9689,8689,9690,8690,9676,8686,9686,0512,0549];
+		var variantValid = true;
+		$.each(nonvariantSubjects, function(index, value) {
 			if(subjectCode==value){
-				varientValid = false;
+				variantValid = false;
 				return false;
 			}
 		});
-		if(varientValid && (year > 9 || (year == 9 && session == 'w')))
-			paper = getValue("paper")+""+getValue("varient");
+		if(variantValid && (year > 9 || (year == 9 && session == 'w')))
+			paper = getValue("paper")+""+getValue("variant");
 		else
 			paper = getValue("paper");
 		
@@ -197,8 +198,17 @@ function openSingleURL(openInNewTab,url){
 
 function openDoubleURL(openInNewTab,url1, url2){
 	if(openInNewTab){
-	    window.open(url1, "window1", "width="+(screen.width/2-10)+",height="+(screen.height-120)+",scrollbars=yes");
-	    window.open(url2, "window2", "width="+(screen.width/2-10)+",height="+(screen.height-120)+",scrollbars=yes,left="+(screen.width/2+10));
+	   var win1 = window.open(url1, "window1", "width="+(screen.width/2-10)+",height="+(screen.height-120)+",scrollbars=yes");
+	   var win2 = window.open(url2, "window2", "width="+(screen.width/2-10)+",height="+(screen.height-120)+",scrollbars=yes,left="+(screen.width/2+10));
+	   if(!win1 || win1.closed || !win2 || win2.closed){
+		alert("Please allow pop-up blocker to use this feature.");
+		win1.close();
+		win2.close();
+	   }
+	   else{
+		win1.focus();
+		win2.focus();
+	   }
 	}
 	else{
 		$("#singleIframe").hide();

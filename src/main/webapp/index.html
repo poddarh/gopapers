@@ -18,7 +18,7 @@
 
 <script>
 var exam = "AS&A";
-var pageURI = "/index.html";
+var pageURI = "/paper.html";
 var pageTitle = "AS & A Level";
 </script>
 
@@ -44,10 +44,11 @@ html, body {
 	</div>
 </div>
 
-<div id="update-message-1" title="Update" style="display:none">
+<div id="update-message" title="Update" style="display:none">
   <p>
     <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
-    Support for (almost) all A & AS level subjects added. Click on "Choose" to select your subjects.
+    New link to the website: <a href="http://gopapers.net">gopapers.net</a><br/>
+    Click on "Choose" to select your subjects.
   </p>
 </div>
 <a id="top"/>
@@ -153,14 +154,14 @@ html, body {
         </div></td>
     </tr>
     <tr>
-      <td align="right"><label for="varient" class="title">Varient</label></td>
+      <td align="right"><label for="variant" class="title">Variant</label></td>
       <td><div class="radio">
-          <input type="radio" id="radio_varient_1" name="varient" value="1">
-          <label for="radio_varient_1">1</label>
-          <input type="radio" id="radio_varient_2" name="varient" value="2" checked="checked">
-          <label for="radio_varient_2">2</label>
-          <input type="radio" id="radio_varient_3" name="varient" value="3">
-          <label for="radio_varient_3">3</label>
+          <input type="radio" id="radio_variant_1" name="variant" value="1">
+          <label for="radio_variant_1">1</label>
+          <input type="radio" id="radio_variant_2" name="variant" value="2" checked="checked">
+          <label for="radio_variant_2">2</label>
+          <input type="radio" id="radio_variant_3" name="variant" value="3">
+          <label for="radio_variant_3">3</label>
         </div></td>
     </tr>
   </table>
@@ -169,7 +170,7 @@ html, body {
 &nbsp;&nbsp;
 <button id="openNewTab" onclick="getPaper(true)" >Open in new tab</button>
 <br/>
-<div style="float: right;"><strong>Short Link: </strong><a class="button" href="http://tinyurl.com/ciepaper">tinyurl.com/ciepaper</a></div>
+<div style="float: right;"><strong>New Link: </strong><a class="button" href="http://gopapers.net">gopapers.net</a></div>
 <button id="openSubPage" onclick="getSubjectPage()" style="margin:10px 0 10px 0">Open Subject Page Below</button><br/>
 </span>
 <div id="singleIframe" style="height: 90%;width: 100%;">
