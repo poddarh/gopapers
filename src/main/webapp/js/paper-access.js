@@ -41,8 +41,8 @@ $(function() {
 		ga('send', 'event', 'button', 'click', $(this).children("span").html());
 	});
 
-	$("a").on('click', function() {
-		ga('send', 'event', 'link', 'click', $(this).children("span").html());
+	$(".link").on('click', function() {
+		ga('send', 'event', 'link', 'click', $(this).html());
 	});
 	
 	lastGAUpdated = new Date();
