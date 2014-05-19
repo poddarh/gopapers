@@ -40,6 +40,10 @@ $(function() {
 	$("button").on('click', function() {
 		ga('send', 'event', 'button', 'click', $(this).children("span").html());
 	});
+
+	$("a").on('click', function() {
+		ga('send', 'event', 'link', 'click', $(this).children("span").html());
+	});
 	
 	lastGAUpdated = new Date();
 	
