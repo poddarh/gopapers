@@ -15,7 +15,6 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 // End Google Analytics
 
 $(function() {
-	
 	if($.cookie(exam+"-lastUpdate")==null || $.cookie(exam+"-lastUpdate") < 2){
 		$( "#update-message" ).dialog({
 	      modal: true,
@@ -89,8 +88,10 @@ $(function() {
 	      }
 	    });
 		
-		$("#edit-subjects").click(function(){
-	       	$( "#subject-selector-div" ).dialog( "open" );
+		$(".choose-subjects-button").click(function(){
+			if($( "#update-message" ).hasClass('ui-dialog-content') && $( "#update-message" ).dialog("isOpen"))
+	       		$( "#update-message" ).dialog( "close" );
+			$( "#subject-selector-div" ).dialog( "open" );
 		});
 		
     });
