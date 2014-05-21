@@ -3,7 +3,7 @@ var lastGAUpdated = new Date();
 var paperFrame;
 var paperFrame1;
 var paperFrame2;
-var initTop;
+var divHeight;
 
 // Google Analytics
 
@@ -109,9 +109,7 @@ $(function() {
         }
     }, 180000);
 	
-	initTop = (0-$("#headerSlideContent").height())+40;
-	$('#headerSlideContainer').css( "top", initTop);
-	$('#headerSlideContainer').stop().animate({'top' : '0px'}, 0);
+	$('body').css('min-height', $('#headerSlideContainer').css('height'));
 	
 	$('#toggle').click(function(){
 		toggleHeader()
@@ -121,7 +119,8 @@ $(function() {
 });
 
 function toggleHeader(){
-	if($('#headerSlideContainer').css('top') != '0px')
+//	if($('#headerSlideContainer').css('height') == '0px')
+	if($('#headerSlideContainer').css('display') == 'none')
 		openHeader();
 	else
 		closeHeader();
@@ -129,12 +128,14 @@ function toggleHeader(){
 }
 
 function openHeader(){
-	$('#headerSlideContainer').stop().animate({'top' : '0px'}, 300);
+//	$('#headerSlideContainer').animate({'height' : divHeight}, 300);
+	$('#headerSlideContainer').show("fast");
 	$('#toggle').html("&#x25B2;");
 }
 
 function closeHeader(){
-	$('#headerSlideContainer').stop().animate({'top' : initTop}, 300);
+//	$('#headerSlideContainer').animate({'height' : '0px'}, 300);
+	$('#headerSlideContainer').hide("fast");
 	$('#toggle').html("&#x25BC;");
 }
 

@@ -1,24 +1,15 @@
 html, body {
 	height: 100%;
-	min-height: 700px;
 }
 tr, td {
 	padding:0;
 }
 #headerSlideContainer {
-	position: fixed;
-	width: 100%;
-	background: white;
-	z-index: 500;
-	
-}
-#headerSlideContent {
-	width: 100%;
-	margin: 0 auto;
+	width: 98%;
 }
 #contentDiv{
 	width: 99%;
-	padding: 1%;
+	padding: 0.5%;
 }
 .title {
 	font-size: 20px;
