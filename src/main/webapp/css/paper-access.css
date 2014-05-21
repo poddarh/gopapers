@@ -1,0 +1,45 @@
+html, body {
+	height: 100%;
+	min-height: 700px;
+}
+#headerSlideContainer {
+	position: fixed;
+	width: 100%;
+	background: white;
+	z-index: 500;
+	
+}
+#headerSlideContent {
+	width: 100%;
+	margin: 0 auto;
+}
+#contentDiv{
+	width: 99%;
+	padding: 1%;
+}
+.title {
+	font-size: 20px;
+	font-weight: bold;
+}
+#toggle {
+	cursor: pointer;
+	background-color: rgb(128, 128, 128);
+	color: white;
+	text-align: center;
+	width: 100%;
+	height: 40px;
+	font-size: 28px;
+}
+#toggle:hover {
+	background-color: rgb(172, 172, 172);
+}
+.loader {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: url('images/page-loader.gif') 50% 50% no-repeat rgb(249,249,249);
+}
+.ui-dialog { z-index: 1000 !important ;}

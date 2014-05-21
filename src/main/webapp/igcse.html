@@ -9,48 +9,40 @@
 <meta http-equiv="pragma" content="no-cache" />
 
 <title>IGCSE | Quick Paper Access</title>
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"/>
-<link rel="stylesheet" href="css/chosen.min.css"/>
+
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 <script src="js/jquery.cookie.js"></script>
 <script src="js/chosen.jquery.min.js"></script>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"/>
+<link rel="stylesheet" href="css/chosen.min.css"/>
+<link rel="stylesheet" href="css/paper-access.css"/>
 
 <script>
 var exam = "IGCSE";
 var pageURI = "/igcse.html";
 var pageTitle = "IGCSE";
 </script>
-
 <script src="js/paper-access.js"></script>
 
-<style>
-html, body {
-	height: 100%
-}
-.title {
-	font-size: 20px;
-	font-weight: bold;
-}
-</style>
 </head>
-<body style="width:95%;padding-left:2%;padding-right:2%">
+<body style="width:100%;padding:0%;margin:0%">
+<div class="loader"></div>
 <div id="subject-selector-div" title="Choose Subjects" style="display:none;">
-	<div id="subject-selector-content" style="overflow: none;height: 300px">
-		<select data-placeholder="Choose your subjects..." style="width:350px;" multiple class="chosen-select" id="subject-selector">
-			<option value=""></option>
-		</select>
-	</div>
+  <div id="subject-selector-content" style="overflow: none;height: 300px;z-index: 1000">
+    <select data-placeholder="Choose your subjects..." style="width:350px;" multiple class="chosen-select" id="subject-selector">
+      <option value=""></option>
+    </select>
+  </div>
 </div>
-
 <div id="update-message" title="Update" style="display:none">
-  <p>
-    <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
-    New link to the website: <a href="http://gopapers.net/igcse.html">gopapers.net/igcse.html</a><br/>
-    Click on "Choose" to select your subjects.
-  </p>
+  <p> <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>Click on "Choose" to select your subjects. </p>
 </div>
 <a id="top"/>
+<div id="headerSlideContainer">
+  <div id="headerSlideContent">
+  <div id="contentDiv">
   <table border="0" cellspacing="10px">
     <tr>
       <td align="right" ><label for="subject" class="title">Exam</label></td>
@@ -164,21 +156,25 @@ html, body {
         </div></td>
     </tr>
   </table>
-  <br />
-<button id="openBelow" onclick="getPaper(false)" >Open Below</button>
-&nbsp;&nbsp;
-<button id="openNewTab" onclick="getPaper(true)" >Open in new tab</button>
-<br/>
-<div style="float: right;"><strong>New Link: </strong><a class="button" href="http://gopapers.net/igcse.html">gopapers.net/igcse.html</a></div>
-<button id="openSubPage" onclick="getSubjectPage()" style="margin:10px 0 10px 0">Open Subject Page Below</button><br />
-</span>
-<div id="singleIframe" style="height: 90%;width: 100%;">
-	<iframe id="paperFrame" src="http://papers.xtremepapers.com/CIE/Cambridge IGCSE/" width="100%" height="100%"></iframe>
+    <br />
+    <button id="openBelow" onclick="getPaper(false)" >Open Below</button>&nbsp;&nbsp;
+    <button id="openNewTab" onclick="getPaper(true)" >Open in new tab</button>
+    <br/>
+    <button id="openSubPage" onclick="getSubjectPage()" style="margin:10px 0 10px 0">Open Subject Page Below</button>
+    <br/>
+    <span style="font-size: 18px">Developed by <a style="color:blue" href="http://fb.com/poddarh" target="_new" class="link">Harsh Poddar</a> | Please give feedback and suggestions by clicking <a style="color:blue" href="javascript:void(0); popOpen('http://1drv.ms/1h6ZZkc')" target="_new" >here</a></span>
+    <br/>
+  </div>
+    <div id="toggle">&#x25B2;</div>
+    </div>
 </div>
-<div id="doubleIframe" style="display: none;height: 90%;width: 100%;">
-	<iframe id="paperFrame1" width="49%" height="100%" style="float:left;"></iframe>
-	<iframe id="paperFrame2" width="49%" height="100%" style="float:right;"></iframe>
+<div style="height: 40px;width: 100%"></div>
+<div id="singleIframe" style="width: 100%;">
+  <iframe id="paperFrame" width="90%" height="100%"></iframe>
 </div>
-<div style="text-align:center;font-size:20px;margin:8px;width:100%" ><a style="color:grey" href="#top" class="link">Scroll up</a> to open another paper. Developed by <a style="color:grey" href="http://fb.com/poddarh" target="_new" class="link">Harsh Poddar</a></div>
+<div id="doubleIframe" style="display: none;width: 100%;">
+  <iframe id="paperFrame1" width="45%" height="100%" style="float:left;"></iframe>
+  <iframe id="paperFrame2" width="45%" height="100%" style="float:right;"></iframe>
+</div>
 </body>
 </html>
