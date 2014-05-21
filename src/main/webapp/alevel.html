@@ -120,7 +120,7 @@ var pageTitle = "AS & A Level";
             <input type="radio" id="radio_type_ms" name="type" value="ms" checked="checked">
             <label for="radio_type_ms">Marking Scheme</label>
             <input type="radio" id="radio_type_qpms" name="type" value="qp-ms">
-            <label for="radio_type_qpms">Question Paper & Marking Scheme</label>
+            <label for="radio_type_qpms">QP & MS</label>
             <input type="radio" id="radio_type_gt" name="type" value="gt">
             <label for="radio_type_gt">Grading Threshold</label>
             <input type="radio" id="radio_type_er" name="type" value="er">
@@ -170,13 +170,13 @@ var pageTitle = "AS & A Level";
     <div id="toggle">&#x25B2;</div>
     </div>
 </div>
-<div style="height: 40px;width: 100%"></div>
-<div id="singleIframe" style="width: 100%;">
-  <iframe id="paperFrame" width="90%" height="100%"></iframe>
-</div>
-<div id="doubleIframe" style="display: none;width: 100%;">
-  <iframe id="paperFrame1" width="45%" height="100%" style="float:left;"></iframe>
-  <iframe id="paperFrame2" width="45%" height="100%" style="float:right;"></iframe>
-</div>
+<table width="99.75%" height="100% cellpadding="0" cellspacing="2" border="0">
+<tr><td colspan="2" height="40px">&nbsp;</td></tr>
+<tr id="singleIframe"><td colspan="2"><iframe id="paperFrame" width="100%" height="100%"></iframe></td></tr>
+<tr id="doubleIframe" style="display:none">
+	<td><iframe id="paperFrame1" width="100%" height="100%"></iframe></td>
+    <td><iframe id="paperFrame2" width="100%" height="100%"></iframe></td>
+</tr>
+</table>
 </body>
 </html>

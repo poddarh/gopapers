@@ -2,6 +2,9 @@ html, body {
 	height: 100%;
 	min-height: 700px;
 }
+tr, td {
+	padding:0;
+}
 #headerSlideContainer {
 	position: fixed;
 	width: 100%;

@@ -108,16 +108,12 @@ $(function() {
         }
     }, 180000);
 	
-	initTop = 0-$("#headerSlideContent").height()+40;
+	initTop = (0-$("#headerSlideContent").height())+40;
 	$('#headerSlideContainer').css( "top", initTop);
 	$('#headerSlideContainer').stop().animate({'top' : '0px'}, 0);
 	
 	$('#toggle').click(function(){
 		toggleHeader()
-	});
-	
-	$( window ).resize(function() {
-		resizeIframes();
 	});
 	
 	$(".loader").fadeOut("slow");
@@ -139,17 +135,6 @@ function openHeader(){
 function closeHeader(){
 	$('#headerSlideContainer').stop().animate({'top' : initTop}, 300);
 	$('#toggle').html("&#x25BC;");
-}
-
-function resizeIframes(){
-	$("#paperFrame").css("height",$( window ).height()-45)
-	$("#paperFrame").css("width",$( window ).width()-10)
-	
-	$("#paperFrame1").css("height",$( window ).height()-40)
-	$("#paperFrame1").css("width",$( window ).width()/2-15)
-	
-	$("#paperFrame2").css("height",$( window ).height()-40)
-	$("#paperFrame2").css("width",$( window ).width()/2-15)
 }
 
 $.urlParam = function(name){
@@ -234,7 +219,6 @@ function openSingleURL(openInNewTab,url){
 	}
 	else{
 		closeHeader()
-		resizeIframes();
 		$("#doubleIframe").hide();
 		$("#singleIframe").show();
 		paperFrame.src = url ;
@@ -259,13 +243,10 @@ function openDoubleURL(openInNewTab,url1, url2){
 	}
 	else{
 		closeHeader()
-		resizeIframes();
 		$("#singleIframe").hide();
 		$("#doubleIframe").show();
 		paperFrame1.src = url1 ;
 		paperFrame2.src = url2 ;
-		paperFrame1.style.display = 'block';
-		paperFrame2.style.display = 'block';
 		paperFrame1.scrollIntoView(true);
 	}
 
