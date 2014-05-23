@@ -3,7 +3,6 @@ var lastGAUpdated = new Date();
 var paperFrame;
 var paperFrame1;
 var paperFrame2;
-var divHeight;
 
 // Google Analytics
 
@@ -58,7 +57,14 @@ $(function() {
 		//Populate subjects radio button
 		var subjectsCookie = $.cookie(exam+"-subjects");
 		if(subjectsCookie!=null && subjectsCookie!=""){
-			var subjects = subjectsCookie.split(",");
+			var subjects;
+			
+			if(exam!="OLevel"){
+				subjectsCookie = subjectsCookie.replace(',',';');
+				$.cookie(exam+"-subjects", subjectsCookie, { expires: 365 });
+			}
+			
+			var subjects = subjectsCookie.split(";");
 			$("#subject-selector").val(subjects);
 			var tmpStr="";
 			$.each(subjects, function (index, value) {
@@ -79,7 +85,7 @@ $(function() {
 	      width: '500px',
 	      buttons: {
 	        Save: function() {
-	        	var str = $("#subject-selector option:selected").map(function(){ return this.value }).get().join(",");
+	        	var str = $("#subject-selector option:selected").map(function(){ return this.value }).get().join(";");
 	        	$.cookie(exam+"-subjects", str, { expires: 365 });
 	        	ga('send', 'event', 'subjects', 'save',exam);
 	        	$( this ).dialog( "close" );
@@ -119,7 +125,6 @@ $(function() {
 });
 
 function toggleHeader(){
-//	if($('#headerSlideContainer').css('height') == '0px')
 	if($('#headerSlideContainer').css('display') == 'none')
 		openHeader();
 	else
@@ -128,13 +133,11 @@ function toggleHeader(){
 }
 
 function openHeader(){
-//	$('#headerSlideContainer').animate({'height' : divHeight}, 300);
 	$('#headerSlideContainer').show("fast");
 	$('#toggle').html("&#x25B2;");
 }
 
 function closeHeader(){
-//	$('#headerSlideContainer').animate({'height' : '0px'}, 300);
 	$('#headerSlideContainer').hide("fast");
 	$('#toggle').html("&#x25BC;");
 }
@@ -152,9 +155,10 @@ $.urlParam = function(name){
 var baseXP;
 if(exam=="IGCSE")
 	baseXP = "http://papers.xtremepapers.com/CIE/Cambridge IGCSE/";
-else{
+else if(exam=="OLevel")
+	baseXP = "http://papers.xtremepapers.com/CIE/Cambridge International O Level/";
+else
 	baseXP = "http://papers.xtremepapers.com/CIE/Cambridge International A and AS Level/";
-}
 
 function getSubjectPage(){
 	var subject = getValue("subject");
@@ -163,12 +167,13 @@ function getSubjectPage(){
 	openSingleURL(false,baseXP+subject);
 }
 
-function changeBoard(){
-	
-	if(exam=="IGCSE")
-		window.window.top.location.href = "http://gopapers.net/alevel.html";
-	else
+function changeBoard(board){
+	if(board=="IGCSE")
 		window.window.top.location.href = "http://gopapers.net/igcse.html";
+	else if(board=="OLevel")
+		window.window.top.location.href = "http://gopapers.net/olevel.html";
+	else
+		window.window.top.location.href = "http://gopapers.net/alevel.html";
 }
 
 function getPaper(openInNewTab){
@@ -201,7 +206,7 @@ function getPaper(openInNewTab){
 				return false;
 			}
 		});
-		if(variantValid && (year > 9 || (year == 9 && session == 'w')))
+		if(variantValid && ((exam=="OLevel" && year>9) || (exam!="OLevel" && (year > 9 || (year == 9 && session == 'w')))))
 			paper = getValue("paper")+""+getValue("variant");
 		else
 			paper = getValue("paper");
