@@ -46,6 +46,17 @@ var pageTitle = "O Level";
   <div id="contentDiv">
     <table border="0" cellspacing="10px">
       <tr>
+      <td align="right" ><label for="exam" class="title">Exam</label></td>
+      <td><div class="radio">
+          <input type="radio" id="radio_exam_OLevel" name="exam" value="O Level" checked="checked">
+          <label for="radio_exam_OLevel">O Level</label>
+          <input type="radio" id="radio_exam_IGCSE" name="exam" value="IGCSE"  onClick="changeBoard('IGCSE')">
+          <label for="radio_exam_IGCSE">IGCSE</label>
+          <input type="radio" id="radio_exam_ALevel" name="exam" value="AS & A Level" onClick="changeBoard('AS&A')" >
+          <label for="radio_exam_ALevel">A & AS Level</label>
+        </div></td>
+    </tr>
+    <tr>
         <td align="right" ><label for="subject" class="title">Subject</label></td>
         <td><div class="radio" id="selected-subjects" style="display: inline">
             <input type="radio" id="radio_subject_English_Language_1123" name="subject" value="English Language (1123)"  checked="checked">
@@ -141,12 +152,7 @@ var pageTitle = "O Level";
     <button id="openSubPage" onclick="getSubjectPage()" style="margin:10px 0 10px 0">Open Subject Page Below</button>
     <br/>
     <span style="font-size: 18px">
-      Exam: <a href="#" onclick="changeBoard('OLevel')" class="link">O Level</a> | 
-      <a href="#" onclick="changeBoard('IGCSE')" class="link">IGCSE</a> | 
-      <a href="#" onclick="changeBoard('AS&A')" class="link">A & AS Level</a>
-      <br/>
-      <br/>
-      Developed by <a style="color:blue" href="http://fb.com/poddarh" target="_new" class="link">Harsh Poddar</a> | Please give feedback and suggestions by clicking <a style="color:blue" href="javascript:void(0); popOpen('http://1drv.ms/1h6ZZkc')" target="_new" >here</a>
+    Developed by <a style="color:blue" href="http://fb.com/poddarh" target="_new" class="link">Harsh Poddar</a> | Please give feedback and suggestions by clicking <a style="color:blue" href="javascript:void(0); popOpen('http://1drv.ms/1h6ZZkc')" target="_new" >here</a>
     </span>
     <br/>
   </div>
