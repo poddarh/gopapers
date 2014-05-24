@@ -134,12 +134,12 @@ function toggleHeader(){
 
 function openHeader(){
 	$('#headerSlideContainer').show("fast");
-	$('#toggle').html("&#x25B2;");
+	$('#toggle').html("Close Options &#x25B2;");
 }
 
 function closeHeader(){
 	$('#headerSlideContainer').hide("fast");
-	$('#toggle').html("&#x25BC;");
+	$('#toggle').html("Open  Options &#x25BC;");
 }
 
 $.urlParam = function(name){
@@ -196,20 +196,11 @@ function getPaper(openInNewTab){
 		openSingleURL(openInNewTab, URL);
 	}
 	else{
-		var paper;
+		var paper = getValue("paper");
+		var variant = getValue("variant");
 		
-		var nonvariantSubjects = [9679,8779,8679,9704,9631,9011,9687,8687,8058,9014,8281,9688,8688,9693,9703,8780,9718,8672,9689,8689,9690,8690,9676,8686,9686,0512,0549];
-		var variantValid = true;
-		$.each(nonvariantSubjects, function(index, value) {
-			if(subjectCode==value){
-				variantValid = false;
-				return false;
-			}
-		});
-		if(variantValid && ((exam=="OLevel" && year>9) || (exam!="OLevel" && (year > 9 || (year == 9 && session == 'w')))))
-			paper = getValue("paper")+""+getValue("variant");
-		else
-			paper = getValue("paper");
+		if(variant!=0 && ((exam=="OLevel" && year>9) || (exam!="OLevel" && (year > 9 || (year == 9 && session == 'w')))))
+			paper += ""+variant;
 		
 		if(type == "qp-ms"){
 			openDoubleURL(openInNewTab, URL+"qp_"+paper+".pdf", URL+"ms_"+paper+".pdf");
