@@ -17,7 +17,7 @@ $(function() {
 	
 	var paper = {params:{}};
 	
-	if($.cookie(exam+"-lastUpdate")==null || $.cookie(exam+"-lastUpdate") < 2){
+	if($.cookie(exam+"-lastUpdate")==null || $.cookie(exam+"-lastUpdate") < 3){
 		$( "#update-message" ).dialog({
 	      modal: true,
 	      width: '500px',
