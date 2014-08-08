@@ -238,7 +238,10 @@ function getPaper(openInNewTab){
 		if(variant!=0 && ((exam=="OLevel" && year>9) || (exam!="OLevel" && (year > 9 || (year == 9 && session == 'w')))))
 			paper += ""+variant;
 		
-		var pageUrl = document.URL.substring(document.URL.lastIndexOf("/"),document.URL.indexOf("?"));
+		var endPos = document.URL.indexOf("?");
+		if(endPos==-1)
+			endPos = document.URL.length;
+		var pageUrl = document.URL.substring(document.URL.lastIndexOf("/"),endPos);
 		top.postMessage({updateUri: pageUrl+"?_"+subjectCode+"_"+session+year+"_"+type+"_"+paper}, "*");
 		
 		if(type == "qm"){
