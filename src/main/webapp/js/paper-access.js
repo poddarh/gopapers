@@ -14,6 +14,9 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 // End Google Analytics
 
 $(function() {
+	
+	var paper = {params:{}};
+	
 	if($.cookie(exam+"-lastUpdate")==null || $.cookie(exam+"-lastUpdate") < 2){
 		$( "#update-message" ).dialog({
 	      modal: true,
@@ -26,7 +29,7 @@ $(function() {
 	    });
 	}
 	
-	$.cookie(exam+"-lastUpdate", '2', { expires: 365 });
+	$.cookie(exam+"-lastUpdate", '3', { expires: 365 });
 	
 	ga('create', 'UA-50628663-2', 'auto');
 
@@ -47,11 +50,36 @@ $(function() {
 	
 	$.getJSON(exam+'.json', function(data) {
 		
+		var indexOfHash = location.href.lastIndexOf('?_');
+		if(indexOfHash!=-1)
+			paper.full = location.href.substring(indexOfHash + 2);
+		
+		if(paper.full!=null){
+			paper.subjectCode = paper.full.substring(0, 4);
+			paper.params.session = paper.full.substring(5, 6);
+			paper.params.year = paper.full.substring(6, 8);
+			paper.params.type = paper.full.substring(9, 11);
+			if(paper.full.length>11){
+				paper.params.paper = paper.full.substring(12, paper.full.length);
+				if(paper.params.paper.length>1){
+					paper.params.variant = paper.params.paper.substring(1,2);
+					paper.params.paper = paper.params.paper.substring(0,1);
+				}else{
+					paper.params.variant = 0;
+				}
+			}
+			ga('send', 'event', 'link', 'open', "Used direct link to paper");
+		}
+		
 		// Populate the subjects list
 		var options = "";
 		$.each(data, function (index, value) {
+			var subjectCode = value.substring(value.length-5,value.length-1);
+			if(paper.subjectCode == subjectCode)
+				paper.params.subject = value;
 			options += "<option value='"+value+"'>"+value+"</option>";
-	    });
+		});
+		
 		$("#subject-selector").append(options);
 		
 		//Populate subjects radio button
@@ -59,23 +87,31 @@ $(function() {
 		if(subjectsCookie!=null && subjectsCookie!=""){
 			var subjects;
 			
-			if(exam!="OLevel"){
-				subjectsCookie = subjectsCookie.replace(',',';');
-				$.cookie(exam+"-subjects", subjectsCookie, { expires: 365 });
-			}
-			
 			var subjects = subjectsCookie.split(";");
 			$("#subject-selector").val(subjects);
 			var tmpStr="";
 			$.each(subjects, function (index, value) {
 				tmpStr+="<input type='radio' id='radio_subject_"+value+"' name='subject' value='"+value+"'";
+				var subjectCode = value.substring(value.length-5,value.length-1);
 				if(index==0)
 					tmpStr += " checked='checked' ";
 				tmpStr+="><label for='radio_subject_"+value+"'>"+value.replace(/[(].*[)]/,"")+"</label>";
 			});
+			
 			$("#selected-subjects").html(tmpStr);
-			$( ".radio" ).buttonset();
+			
 		}
+		
+		if(paper.full!=null){
+			if($("input[type='radio'][name='subject'][value='"+paper.params.subject+"']").length==0)
+				$("#selected-subjects").append("<input type='radio' id='radio_subject_"+paper.params.subject+"' name='subject' value='"+paper.params.subject+"'><label for='radio_subject_"+paper.params.subject+"'>"+paper.params.subject.replace(/[(].*[)]/,"")+"</label>");
+	
+			set(paper.params);
+			$('#headerSlideContainer').hide("fast");
+			$('#toggle').html("Open  Options &#x25BC;");
+			getPaper(false);
+		}
+		$( ".radio" ).buttonset();
 		
 		$(".chosen-select").chosen({ width: '350px' });
 		
@@ -202,7 +238,10 @@ function getPaper(openInNewTab){
 		if(variant!=0 && ((exam=="OLevel" && year>9) || (exam!="OLevel" && (year > 9 || (year == 9 && session == 'w')))))
 			paper += ""+variant;
 		
-		if(type == "qp-ms"){
+		var pageUrl = document.URL.substring(document.URL.indexOf("/"),document.URL.indexOf("?"));
+		top.postMessage({updateUri: pageUrl+"?_"+subjectCode+"_"+session+year+"_"+type+"_"+paper}, "*");
+		
+		if(type == "qm"){
 			openDoubleURL(openInNewTab, URL+"qp_"+paper+".pdf", URL+"ms_"+paper+".pdf");
 		}
 		else{
@@ -254,11 +293,21 @@ function popOpen(url){
 	window.open(url, "popwindow", "width=780,height=580,scrollbars=yes");
 }
 
-function getValue(id){
+function getValue(inputName){
 	var selectedVal = "";
-	var selected = $("input[type='radio'][name='"+id+"']:checked");
+	var selected = $("input[type='radio'][name='"+inputName+"']:checked");
 	if (selected.length > 0) {
 		selectedVal = selected.val();
 	}
 	return selectedVal;
+}
+
+function setValue(inputName, value) {
+	$("input[type='radio'][name='"+inputName+"'][value='"+value+"']").click();
+}
+
+function set(fields){
+	$.map(fields, function(value, key){
+		setValue(key, value);
+	});
 }
