@@ -1,8 +1,13 @@
 html, body {
 	height: 100%;
+	overflow:hidden;
 }
+
 tr, td {
 	padding:0;
+}
+iframe{
+	border:0;
 }
 #headerSlideContainer {
 	width: 98%;
