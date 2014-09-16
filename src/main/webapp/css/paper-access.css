@@ -11,6 +11,13 @@ tr, td {
 iframe{
 	border:0;
 }
+#shareContainer {
+	display: inline-block;
+	background-color: lightblue;
+	padding: 5px 15px;
+	border-radius: 5px;
+	margin-left: 30px;
+}
 #headerSlideContainer {
 	width: 98%;
 }
