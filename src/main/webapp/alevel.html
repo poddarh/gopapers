@@ -15,6 +15,7 @@
 <script src="js/jquery.cookie.js"></script>
 <script src="js/chosen.jquery.min.js"></script>
 
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:700,400' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"/>
 <link rel="stylesheet" href="css/chosen.min.css"/>
 <link rel="stylesheet" href="css/paper-access.css"/>
@@ -28,7 +29,11 @@ var pageTitle = "AS & A Level";
 
 </head>
 <body style="width:100%;padding:0%;margin:0%">
-<div class="loader"></div>
+<!-- Preloader -->
+<div id="preloader">
+    <div id="status">&nbsp;</div>
+</div>
+
 <div id="subject-selector-div" title="Choose Subjects" style="display:none;">
   <div id="subject-selector-content" style="overflow: none;height: 300px;z-index: 1000">
     <select data-placeholder="Choose your subjects..." style="width:350px;" multiple class="chosen-select" id="subject-selector">
@@ -37,7 +42,10 @@ var pageTitle = "AS & A Level";
   </div>
 </div>
 <div id="update-message" title="Update" style="display:none">
-  <p> <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>Now you can <strong>copy and share link</strong> to specific paper from address bar.
+  <p> <span class="ui-icon ui-icon-circle-check" style="float:left; margin:3px 7px 190px 0;"></span>
+  Now you can open any combination of papers in left half and right half. Open subject page is replaced by a "Subject Page" option as on of paper types. An aditional option for viewing inserts is added.<br><br>
+I would love to get more and more suggestions to improve this website. All the best for the exams :)
+  </p>
 </div>
 <table width="100%" height="100% cellpadding="0" cellspacing="0" border="0">
 <tr height="40px;"><td colspan="2">
@@ -116,18 +124,20 @@ var pageTitle = "AS & A Level";
       </tr>
       <tr>
         <td align="right"><label for="type" class="title">Type</label></td>
-        <td><div class="radio">
-            <input type="radio" id="radio_type_qp" name="type" value="qp">
-            <label for="radio_type_qp">Question Paper</label>
-            <input type="radio" id="radio_type_ms" name="type" value="ms" checked="checked">
-            <label for="radio_type_ms">Marking Scheme</label>
-            <input type="radio" id="radio_type_qm" name="type" value="qm">
-            <label for="radio_type_qm">Question Paper & Marking Scheme</label>
-            <input type="radio" id="radio_type_gt" name="type" value="gt">
-            <label for="radio_type_gt">Grading Threshold</label>
-            <input type="radio" id="radio_type_er" name="type" value="er">
-            <label for="radio_type_er">Examiner Report</label>
-          </div></td>
+              <td><div class="radio">
+                  <input type="radio" id="radio_type_qp" name="type" value="qp">
+                  <label for="radio_type_qp">Question Paper</label>
+                  <input type="radio" id="radio_type_ms" name="type" value="ms" checked="checked">
+                  <label for="radio_type_ms">Marking Scheme</label>
+                  <input type="radio" id="radio_type_in" name="type" value="in">
+                  <label for="radio_type_in">Insert</label>
+                  <input type="radio" id="radio_type_gt" name="type" value="gt">
+                  <label for="radio_type_gt">Grading Threshold</label>
+                  <input type="radio" id="radio_type_er" name="type" value="er">
+                  <label for="radio_type_er">Examiner Report</label>
+                  <input type="radio" id="radio_type_sp" name="type" value="sp">
+                  <label for="radio_type_sp">Subject Page</label>
+                </div></td>
       </tr>
       <tr>
         <td align="right"><label for="paper" class="title">Paper</label></td>
@@ -162,24 +172,31 @@ var pageTitle = "AS & A Level";
           </div></td>
       </tr>
     </table>
-    <br />
-    <button id="openBelow" onclick="getPaper(false)" >Open Below</button>&nbsp;&nbsp;
-    <button id="openNewTab" onclick="getPaper(true)" >Open in new tab</button>
-    <br/>
-    <button id="openSubPage" onclick="getSubjectPage()" style="margin:10px 0 10px 0">Open Subject Page Below</button>
-    <br/>
-    <span style="font-size: 18px">
-    Developed by <a style="color:blue" href="http://fb.com/poddarh" target="_new" class="link">Harsh Poddar</a> | Please give feedback and suggestions by clicking <a style="color:blue" href="javascript:void(0); popOpen('http://1drv.ms/1h6ZZkc')" target="_new" >here</a>
-    </span>
-    <br/>
-  </div>
+    <fieldset id="openInContainer">
+  <legend id="openIn">Open in...</legend>
+  <table cellspacing="8">
+    <tr>
+      <td colspan="2"><button id="openFull" onclick="openBelow()" >Full Window</button></td>
+      <td rowspan="2"><button id="openNewTab" onclick="openInNewTab()" >New tab</button></td>
+    </tr>
+    <tr>
+      <td><button id="openLH" onclick="openInLH()" >Left Half</button></td>
+      <td><button id="openRH" onclick="openInRH()" >Right Half</button></td>
+    </tr>
+  </table>
+</fieldset>
+<br/>
+<span style="font-size: 18px"> Developed by <a style="color:blue" href="http://fb.com/poddarh" target="_new" class="link">Harsh Poddar</a> | Please give feedback and suggestions by clicking <a style="color:blue" href="javascript:void(0); popOpen('http://1drv.ms/1h6ZZkc')" target="_new" >here</a> </span> <br/>
 </div>
-<div id="toggle">Close Options &#x25B2;</div>
-</td></tr>
-<tr id="singleIframe"><td colspan="2"><iframe id="paperFrame" width="100%" height="100%"></iframe></td></tr>
+</div>
+<div id="toggle">Close Options &#x25B2;</div></td>
+</tr>
+<tr id="singleIframe">
+<td colspan="2"><iframe id="paperFrame" width="100%" height="100%"></iframe></td>
+</tr>
 <tr id="doubleIframe" style="display:none">
-	<td><iframe id="paperFrame1" width="100%" height="100%"></iframe></td>
-    <td><iframe id="paperFrame2" width="100%" height="100%"></iframe></td>
+<td><iframe id="paperFrame1" width="100%" height="100%"></iframe></td>
+<td><iframe id="paperFrame2" width="100%" height="100%"></iframe></td>
 </tr>
 </table>
 </body>

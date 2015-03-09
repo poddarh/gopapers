@@ -15,20 +15,27 @@
 <script src="js/jquery.cookie.js"></script>
 <script src="js/chosen.jquery.min.js"></script>
 
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:700,400' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"/>
 <link rel="stylesheet" href="css/chosen.min.css"/>
 <link rel="stylesheet" href="css/paper-access.css"/>
 
 <script>
+
 var exam = "IGCSE";
 var pageURI = "/igcse.html";
 var pageTitle = "IGCSE";
+
 </script>
 <script src="js/paper-access.js"></script>
 
 </head>
 <body style="width:100%;padding:0%;margin:0%">
-<div class="loader"></div>
+<!-- Preloader -->
+<div id="preloader">
+    <div id="status">&nbsp;</div>
+</div>
+
 <div id="subject-selector-div" title="Choose Subjects" style="display:none;">
   <div id="subject-selector-content" style="overflow: none;height: 300px;z-index: 1000">
     <select data-placeholder="Choose your subjects..." style="width:350px;" multiple class="chosen-select" id="subject-selector">
@@ -37,150 +44,163 @@ var pageTitle = "IGCSE";
   </div>
 </div>
 <div id="update-message" title="Update" style="display:none">
-  <p> <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>Now you can <strong>copy and share link</strong> to specific paper from address bar.
+  <p> <span class="ui-icon ui-icon-circle-check" style="float:left; margin:3px 7px 190px 0;"></span>
+  Now you can open any combination of papers in left half and right half. Open subject page is replaced by a "Subject Page" option as on of paper types. An aditional option for viewing inserts is added.<br><br>
+I would love to get more and more suggestions to improve this website. All the best for the exams :)
+  </p>
 </div>
 <table width="100%" height="100% cellpadding="0" cellspacing="0" border="0">
-<tr height="40px;"><td colspan="2">
-<div id="headerSlideContainer">
-  <div id="contentDiv">
-    <table border="0" cellspacing="10px">
-    <tr>
-      <td align="right" ><label for="exam" class="title">Exam</label></td>
-      <td><div class="radio">
-          <input type="radio" id="radio_exam_OLevel" name="exam" value="O Level" onClick="changeBoard('OLevel')" >
-          <label for="radio_exam_OLevel">O Level</label>
-          <input type="radio" id="radio_exam_IGCSE" name="exam" value="IGCSE" checked="checked">
-          <label for="radio_exam_IGCSE">IGCSE</label>
-          <input type="radio" id="radio_exam_ALevel" name="exam" value="AS & A Level" onClick="changeBoard('AS&A')" >
-          <label for="radio_exam_ALevel">A & AS Level</label>
-        </div></td>
-    </tr>
-    <tr>
-      <td align="right" ><label for="subject" class="title">Subject</label></td>
-      <td><div class="radio" id="selected-subjects" style="display: inline">
-          <input type="radio" id="radio_subject_Accounting" name="subject" value="Accounting (0452)">
-          <label for="radio_subject_Accounting">Accounting</label>
-          <input type="radio" id="radio_subject_Business_Studies" name="subject" value="Business Studies (0450)">
-          <label for="radio_subject_Business_Studies">Business Studies</label>
-          <input type="radio" id="radio_subject_Biology" name="subject" value="Biology (0610)">
-          <label for="radio_subject_Biology">Biology</label>
-          <input type="radio" id="radio_subject_Chemistry" name="subject" value="Chemistry (0620)">
-          <label for="radio_subject_Chemistry">Chemistry</label>
-          <input type="radio" id="radio_subject_Economics" name="subject" value="Economics (0455)">
-          <label for="radio_subject_Economics">Economics</label>
-          <input type="radio" id="radio_subject_English" name="subject" value="English - First Language (0500)">
-          <label for="radio_subject_English">English</label>
-          <input type="radio" id="radio_subject_Mathematics" name="subject" value="Mathematics (0580)" checked="checked">
-          <label for="radio_subject_Mathematics">Maths</label>
-          <input type="radio" id="radio_subject_Physics" name="subject" value="Physics (0625)">
-          <label for="radio_subject_Physics">Physics</label>
+  <tr height="40px;">
+    <td colspan="2"><div id="headerSlideContainer">
+        <div id="contentDiv">
+          <table border="0" cellspacing="10px">
+            <tr>
+              <td align="right" ><label for="exam" class="title">Exam</label></td>
+              <td><div class="radio">
+                  <input type="radio" id="radio_exam_OLevel" name="exam" value="O Level" onClick="changeBoard('OLevel')" >
+                  <label for="radio_exam_OLevel">O Level</label>
+                  <input type="radio" id="radio_exam_IGCSE" name="exam" value="IGCSE" checked="checked">
+                  <label for="radio_exam_IGCSE">IGCSE</label>
+                  <input type="radio" id="radio_exam_ALevel" name="exam" value="AS & A Level" onClick="changeBoard('AS&A')" >
+                  <label for="radio_exam_ALevel">A & AS Level</label>
+                </div></td>
+            </tr>
+            <tr>
+              <td align="right" ><label for="subject" class="title">Subject</label></td>
+              <td><div class="radio" id="selected-subjects" style="display: inline">
+                  <input type="radio" id="radio_subject_Accounting" name="subject" value="Accounting (0452)">
+                  <label for="radio_subject_Accounting">Accounting</label>
+                  <input type="radio" id="radio_subject_Business_Studies" name="subject" value="Business Studies (0450)">
+                  <label for="radio_subject_Business_Studies">Business Studies</label>
+                  <input type="radio" id="radio_subject_Biology" name="subject" value="Biology (0610)">
+                  <label for="radio_subject_Biology">Biology</label>
+                  <input type="radio" id="radio_subject_Chemistry" name="subject" value="Chemistry (0620)">
+                  <label for="radio_subject_Chemistry">Chemistry</label>
+                  <input type="radio" id="radio_subject_Economics" name="subject" value="Economics (0455)">
+                  <label for="radio_subject_Economics">Economics</label>
+                  <input type="radio" id="radio_subject_English" name="subject" value="English - First Language (0500)">
+                  <label for="radio_subject_English">English</label>
+                  <input type="radio" id="radio_subject_Mathematics" name="subject" value="Mathematics (0580)" checked="checked">
+                  <label for="radio_subject_Mathematics">Maths</label>
+                  <input type="radio" id="radio_subject_Physics" name="subject" value="Physics (0625)">
+                  <label for="radio_subject_Physics">Physics</label>
+                </div>
+                &nbsp;&nbsp;
+                <button class="choose-subjects-button" style="font-weight: bold;">Set my Subjects</button></td>
+            </tr>
+            <tr>
+              <td align="right"><label for="year" class="title">Year</label></td>
+              <td><div class="radio">
+                  <input type="radio" id="radio_year_03" name="year" value="03">
+                  <label for="radio_year_03">2003</label>
+                  <input type="radio" id="radio_year_04" name="year" value="04">
+                  <label for="radio_year_04">2004</label>
+                  <input type="radio" id="radio_year_05" name="year" value="05">
+                  <label for="radio_year_05">2005</label>
+                  <input type="radio" id="radio_year_06" name="year" value="06">
+                  <label for="radio_year_06">2006</label>
+                  <input type="radio" id="radio_year_07" name="year" value="07">
+                  <label for="radio_year_07">2007</label>
+                  <input type="radio" id="radio_year_08" name="year" value="08">
+                  <label for="radio_year_08">2008</label>
+                  <input type="radio" id="radio_year_09" name="year" value="09">
+                  <label for="radio_year_09">2009</label>
+                  <input type="radio" id="radio_year_10" name="year" value="10">
+                  <label for="radio_year_10">2010</label>
+                  <input type="radio" id="radio_year_11" name="year" value="11">
+                  <label for="radio_year_11">2011</label>
+                  <input type="radio" id="radio_year_12" name="year" value="12">
+                  <label for="radio_year_12">2012</label>
+                  <input type="radio" id="radio_year_13" name="year" value="13" checked="checked">
+                  <label for="radio_year_13">2013</label>
+                </div></td>
+            </tr>
+            <tr>
+              <td align="right"><label for="session" class="title">Session</label></td>
+              <td><div class="radio">
+                  <input type="radio" id="radio_session_s" name="session" value="s" checked="checked">
+                  <label for="radio_session_s">May/June</label>
+                  <input type="radio" id="radio_session_w" name="session" value="w">
+                  <label for="radio_session_w">October/November</label>
+                </div></td>
+            </tr>
+            <tr>
+              <td align="right"><label for="type" class="title">Type</label></td>
+              <td><div class="radio">
+                  <input type="radio" id="radio_type_qp" name="type" value="qp">
+                  <label for="radio_type_qp">Question Paper</label>
+                  <input type="radio" id="radio_type_ms" name="type" value="ms" checked="checked">
+                  <label for="radio_type_ms">Marking Scheme</label>
+                  <input type="radio" id="radio_type_in" name="type" value="in">
+                  <label for="radio_type_in">Insert</label>
+                  <input type="radio" id="radio_type_gt" name="type" value="gt">
+                  <label for="radio_type_gt">Grading Threshold</label>
+                  <input type="radio" id="radio_type_er" name="type" value="er">
+                  <label for="radio_type_er">Examiner Report</label>
+                  <input type="radio" id="radio_type_sp" name="type" value="sp">
+                  <label for="radio_type_sp">Subject Page</label>
+                </div></td>
+            </tr>
+            <tr>
+              <td align="right"><label for="paper" class="title">Paper</label></td>
+              <td><div class="radio">
+                  <input type="radio" id="radio_paper_1" name="paper" value="1" checked="checked">
+                  <label for="radio_paper_1">1</label>
+                  <input type="radio" id="radio_paper_2" name="paper" value="2">
+                  <label for="radio_paper_2">2</label>
+                  <input type="radio" id="radio_paper_3" name="paper" value="3">
+                  <label for="radio_paper_3">3</label>
+                  <input type="radio" id="radio_paper_4" name="paper" value="4">
+                  <label for="radio_paper_4">4</label>
+                  <input type="radio" id="radio_paper_5" name="paper" value="5">
+                  <label for="radio_paper_5">5</label>
+                  <input type="radio" id="radio_paper_6" name="paper" value="6">
+                  <label for="radio_paper_6">6</label>
+                  <input type="radio" id="radio_paper_7" name="paper" value="7">
+                  <label for="radio_paper_7">7</label>
+                </div></td>
+            </tr>
+            <tr>
+              <td align="right"><label for="variant" class="title">Variant</label></td>
+              <td><div class="radio">
+                  <input type="radio" id="radio_variant_0" name="variant" value="0">
+                  <label for="radio_variant_0">None</label>
+                  <input type="radio" id="radio_variant_1" name="variant" value="1">
+                  <label for="radio_variant_1">1</label>
+                  <input type="radio" id="radio_variant_2" name="variant" value="2" checked="checked">
+                  <label for="radio_variant_2">2</label>
+                  <input type="radio" id="radio_variant_3" name="variant" value="3">
+                  <label for="radio_variant_3">3</label>
+                </div></td>
+            </tr>
+          </table>
+          <br />
+            <fieldset id="openInContainer">
+              <legend id="openIn">Open in...</legend>
+              <table cellspacing="8">
+                <tr>
+                  <td colspan="2"><button id="openFull" onclick="openBelow()" >Full Window</button></td>
+                  <td rowspan="2"><button id="openNewTab" onclick="openInNewTab()" >New tab</button></td>
+                </tr>
+                <tr>
+                  <td><button id="openLH" onclick="openInLH()" >Left Half</button></td>
+                  <td><button id="openRH" onclick="openInRH()" >Right Half</button></td>
+                </tr>
+              </table>
+            </fieldset>
+          <br/>
+          <span style="font-size: 18px"> Developed by <a style="color:blue" href="http://fb.com/poddarh" target="_new" class="link">Harsh Poddar</a> | Please give feedback and suggestions by clicking <a style="color:blue" href="javascript:void(0); popOpen('http://1drv.ms/1h6ZZkc')" target="_new" >here</a> </span> <br/>
         </div>
-        &nbsp;&nbsp;
-        <button class="choose-subjects-button" style="font-weight: bold;">Set my Subjects</button></td>
-    </tr>
-    <tr>
-      <td align="right"><label for="year" class="title">Year</label></td>
-      <td><div class="radio">
-          <input type="radio" id="radio_year_03" name="year" value="03">
-          <label for="radio_year_03">2003</label>
-          <input type="radio" id="radio_year_04" name="year" value="04">
-          <label for="radio_year_04">2004</label>
-          <input type="radio" id="radio_year_05" name="year" value="05">
-          <label for="radio_year_05">2005</label>
-          <input type="radio" id="radio_year_06" name="year" value="06">
-          <label for="radio_year_06">2006</label>
-          <input type="radio" id="radio_year_07" name="year" value="07">
-          <label for="radio_year_07">2007</label>
-          <input type="radio" id="radio_year_08" name="year" value="08">
-          <label for="radio_year_08">2008</label>
-          <input type="radio" id="radio_year_09" name="year" value="09">
-          <label for="radio_year_09">2009</label>
-          <input type="radio" id="radio_year_10" name="year" value="10">
-          <label for="radio_year_10">2010</label>
-          <input type="radio" id="radio_year_11" name="year" value="11">
-          <label for="radio_year_11">2011</label>
-          <input type="radio" id="radio_year_12" name="year" value="12">
-          <label for="radio_year_12">2012</label>
-          <input type="radio" id="radio_year_13" name="year" value="13" checked="checked">
-          <label for="radio_year_13">2013</label>
-        </div></td>
-    </tr>
-    <tr>
-      <td align="right"><label for="session" class="title">Session</label></td>
-      <td><div class="radio">
-          <input type="radio" id="radio_session_s" name="session" value="s" checked="checked">
-          <label for="radio_session_s">May/June</label>
-          <input type="radio" id="radio_session_w" name="session" value="w">
-          <label for="radio_session_w">October/November</label>
-        </div></td>
-    </tr>
-    <tr>
-      <td align="right"><label for="type" class="title">Type</label></td>
-      <td><div class="radio">
-          <input type="radio" id="radio_type_qp" name="type" value="qp">
-          <label for="radio_type_qp">Question Paper</label>
-          <input type="radio" id="radio_type_ms" name="type" value="ms" checked="checked">
-          <label for="radio_type_ms">Marking Scheme</label>
-          <input type="radio" id="radio_type_qm" name="type" value="qm">
-          <label for="radio_type_qm">Question Paper & Marking Scheme</label>
-          <input type="radio" id="radio_type_gt" name="type" value="gt">
-          <label for="radio_type_gt">Grading Threshold</label>
-          <input type="radio" id="radio_type_er" name="type" value="er">
-          <label for="radio_type_er">Examiner Report</label>
-        </div></td>
-    </tr>
-    <tr>
-      <td align="right"><label for="paper" class="title">Paper</label></td>
-      <td><div class="radio">
-          <input type="radio" id="radio_paper_1" name="paper" value="1" checked="checked">
-          <label for="radio_paper_1">1</label>
-          <input type="radio" id="radio_paper_2" name="paper" value="2">
-          <label for="radio_paper_2">2</label>
-          <input type="radio" id="radio_paper_3" name="paper" value="3">
-          <label for="radio_paper_3">3</label>
-          <input type="radio" id="radio_paper_4" name="paper" value="4">
-          <label for="radio_paper_4">4</label>
-          <input type="radio" id="radio_paper_5" name="paper" value="5">
-          <label for="radio_paper_5">5</label>
-          <input type="radio" id="radio_paper_6" name="paper" value="6">
-          <label for="radio_paper_6">6</label>
-          <input type="radio" id="radio_paper_7" name="paper" value="7">
-          <label for="radio_paper_7">7</label>
-        </div></td>
-    </tr>
-    <tr>
-      <td align="right"><label for="variant" class="title">Variant</label></td>
-      <td><div class="radio">
-          <input type="radio" id="radio_variant_0" name="variant" value="0">
-            <label for="radio_variant_0">None</label>
-            <input type="radio" id="radio_variant_1" name="variant" value="1">
-          <label for="radio_variant_1">1</label>
-          <input type="radio" id="radio_variant_2" name="variant" value="2" checked="checked">
-          <label for="radio_variant_2">2</label>
-          <input type="radio" id="radio_variant_3" name="variant" value="3">
-          <label for="radio_variant_3">3</label>
-        </div></td>
-    </tr>
-  </table>
-    <br />
-    <button id="openBelow" onclick="getPaper(false)" >Open Below</button>&nbsp;&nbsp;
-    <button id="openNewTab" onclick="getPaper(true)" >Open in new tab</button>
-    <br/>
-    <button id="openSubPage" onclick="getSubjectPage()" style="margin:10px 0 10px 0">Open Subject Page Below</button>
-    <br/>
-    <span style="font-size: 18px">
-    Developed by <a style="color:blue" href="http://fb.com/poddarh" target="_new" class="link">Harsh Poddar</a> | Please give feedback and suggestions by clicking <a style="color:blue" href="javascript:void(0); popOpen('http://1drv.ms/1h6ZZkc')" target="_new" >here</a>
-    </span>
-    <br/>
-  </div>
-</div>
-<div id="toggle">Close Options &#x25B2;</div>
-</td></tr>
-<tr id="singleIframe"><td colspan="2"><iframe id="paperFrame" width="100%" height="100%"></iframe></td></tr>
-<tr id="doubleIframe" style="display:none">
-	<td><iframe id="paperFrame1" width="100%" height="100%"></iframe></td>
+      </div>
+      <div id="toggle">Close Options &#x25B2;</div></td>
+  </tr>
+  <tr id="singleIframe">
+    <td colspan="2"><iframe id="paperFrame" width="100%" height="100%"></iframe></td>
+  </tr>
+  <tr id="doubleIframe" style="display:none">
+    <td><iframe id="paperFrame1" width="100%" height="100%"></iframe></td>
     <td><iframe id="paperFrame2" width="100%" height="100%"></iframe></td>
-</tr>
+  </tr>
 </table>
 </body>
 </html>

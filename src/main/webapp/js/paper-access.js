@@ -3,8 +3,20 @@ var lastGAUpdated = new Date();
 var paperFrame;
 var paperFrame1;
 var paperFrame2;
+var paperURL = "";
+var paperURI = "";
+var RHPaperURI = "";
+var LHPaperURI = "";
 
 // Google Analytics
+
+//<![CDATA[
+	$(window).load(function() { // makes sure the whole site is loaded
+		$('#status').fadeOut(); // will first fade out the loading animation
+		$('#preloader').delay(350).fadeOut('slow'); // will fade out the white DIV that covers the website.
+		$('body').delay(350).css({'overflow':'visible'});
+	});
+//]]>
 
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -16,8 +28,9 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 $(function() {
 	
 	var paper = {params:{}};
+	var paper2 = {params:{}};
 	
-	if($.cookie(exam+"-lastUpdate")==null || $.cookie(exam+"-lastUpdate") < 3){
+	if($.cookie(exam+"-lastUpdate")==null || $.cookie(exam+"-lastUpdate") < 4){
 		$( "#update-message" ).dialog({
 	      modal: true,
 	      width: '500px',
@@ -29,7 +42,7 @@ $(function() {
 	    });
 	}
 	
-	$.cookie(exam+"-lastUpdate", '3', { expires: 365 });
+	$.cookie(exam+"-lastUpdate", '4', { expires: 365 });
 	
 	ga('create', 'UA-50628663-2', 'auto');
 
@@ -51,25 +64,63 @@ $(function() {
 	$.getJSON(exam+'.json', function(data) {
 		
 		var indexOfHash = location.href.lastIndexOf('?_');
-		if(indexOfHash!=-1)
-			paper.full = location.href.substring(indexOfHash + 2);
-		
+		var indexOfHash2 = location.href.lastIndexOf('__');
+		if(indexOfHash!=-1){
+			if(indexOfHash2!=-1)
+				paper.full = location.href.substring(indexOfHash + 2, indexOfHash2);
+			else
+				paper.full = location.href.substring(indexOfHash + 2);
+		}
 		if(paper.full!=null){
 			paper.subjectCode = paper.full.substring(0, 4);
-			paper.params.session = paper.full.substring(5, 6);
-			paper.params.year = paper.full.substring(6, 8);
-			paper.params.type = paper.full.substring(9, 11);
-			if(paper.full.length>11){
-				paper.params.paper = paper.full.substring(12, paper.full.length);
-				if(paper.params.paper.length>1){
-					paper.params.variant = paper.params.paper.substring(1,2);
-					paper.params.paper = paper.params.paper.substring(0,1);
-				}else{
-					paper.params.variant = 0;
+			if(paper.full.length>4){
+				
+				paper.params.session = paper.full.substring(5, 6);
+				paper.params.year = paper.full.substring(6, 8);
+				paper.params.type = paper.full.substring(9, 11);
+				if(paper.full.length>11){
+					paper.params.paper = paper.full.substring(12, paper.full.length);
+					if(paper.params.paper.length>1){
+						paper.params.variant = paper.params.paper.substring(1,2);
+						paper.params.paper = paper.params.paper.substring(0,1);
+					}else{
+						paper.params.variant = 0;
+					}
 				}
+				
+			}
+			else{
+				paper.params.type = "sp";
 			}
 			ga('send', 'event', 'link', 'open', "Used direct link to paper");
 		}
+		
+		
+		if(indexOfHash2!=-1)
+			paper2.full = location.href.substring(indexOfHash2 + 2);
+		
+		if(paper2.full!=null){
+			paper2.subjectCode = paper2.full.substring(0, 4);
+			if(paper2.full.length>4){
+				
+				paper2.params.session = paper2.full.substring(5, 6);
+				paper2.params.year = paper2.full.substring(6, 8);
+				paper2.params.type = paper2.full.substring(9, 11);
+				if(paper2.full.length>11){
+					paper2.params.paper = paper2.full.substring(12, paper2.full.length);
+					if(paper2.params.paper.length>1){
+						paper2.params.variant = paper2.params.paper.substring(1,2);
+						paper2.params.paper = paper2.params.paper.substring(0,1);
+					}else{
+						paper2.params.variant = 0;
+					}
+				}
+			}
+			else{
+				paper2.params.type = "sp";
+			}
+		}
+		
 		
 		// Populate the subjects list
 		var options = "";
@@ -77,6 +128,8 @@ $(function() {
 			var subjectCode = value.substring(value.length-5,value.length-1);
 			if(paper.subjectCode == subjectCode)
 				paper.params.subject = value;
+			if(paper2.subjectCode == subjectCode)
+				paper2.params.subject = value;
 			options += "<option value='"+value+"'>"+value+"</option>";
 		});
 		
@@ -102,6 +155,7 @@ $(function() {
 			
 		}
 		
+		
 		if(paper.full!=null){
 			if($("input[type='radio'][name='subject'][value='"+paper.params.subject+"']").length==0)
 				$("#selected-subjects").append("<input type='radio' id='radio_subject_"+paper.params.subject+"' name='subject' value='"+paper.params.subject+"'><label for='radio_subject_"+paper.params.subject+"'>"+paper.params.subject.replace(/[(].*[)]/,"")+"</label>");
@@ -109,8 +163,22 @@ $(function() {
 			set(paper.params);
 			$('#headerSlideContainer').hide("fast");
 			$('#toggle').html("Open  Options &#x25BC;");
-			getPaper(false);
+			evalPaperURL();
+			
+			if(paper2.full==null){
+				openBelow();
+			}else{
+				openInLH();				
+				if($("input[type='radio'][name='subject'][value='"+paper2.params.subject+"']").length==0)
+					$("#selected-subjects").append("<input type='radio' id='radio_subject_"+paper2.params.subject+"' name='subject' value='"+paper2.params.subject+"'><label for='radio_subject_"+paper2.params.subject+"'>"+paper2.params.subject.replace(/[(].*[)]/,"")+"</label>");
+		
+				set(paper2.params);
+				evalPaperURL();
+				openInRH();
+			}
+			
 		}
+		
 		$( ".radio" ).buttonset();
 		
 		$(".chosen-select").chosen({ width: '350px' });
@@ -157,7 +225,6 @@ $(function() {
 		toggleHeader()
 	});
 	
-	$(".loader").fadeOut("slow");
 });
 
 function toggleHeader(){
@@ -212,88 +279,112 @@ function changeBoard(board){
 		window.window.top.location.href = "http://gopapers.net/alevel.html";
 }
 
-function getPaper(openInNewTab){
-	var year = getValue("year");
-	var session = getValue("session");
+function evalPaperURL(){
 	var subject = getValue("subject");
 	var type = getValue("type");
-	var subjectCode = subject.substring(subject.length-5,subject.length-1);
 	
 	ga('send', 'event', 'subject', 'find', subject);
 	ga('send', 'event', 'type', 'find', type);
 	
 	lastGAUpdated = new Date();
 	
-	var	baseURL;
-	var fileName;
-	URL = baseXP+subject+"/"+subjectCode+"_"+session+year+"_";
-	if(type == "er" || type == "gt"){
-		URL += type+".pdf";
-		openSingleURL(openInNewTab, URL);
-	}
-	else{
-		var paper = getValue("paper");
-		var variant = getValue("variant");
+	if(type=="sp"){
+		paperURI = subject+"/";
+		paperURL = baseXP + paperURI;
+	}else{
 		
-		if(variant!=0 && ((exam=="OLevel" && year>9) || (exam!="OLevel" && (year > 9 || (year == 9 && session == 'w')))))
-			paper += ""+variant;
+		var year = getValue("year");
+		var session = getValue("session");
+		var subjectCode = subject.substring(subject.length-5,subject.length-1)
 		
-		var endPos = document.URL.indexOf("?");
-		if(endPos==-1)
-			endPos = document.URL.length;
-		var pageUrl = document.URL.substring(document.URL.lastIndexOf("/"),endPos);
-		top.postMessage({updateUri: pageUrl+"?_"+subjectCode+"_"+session+year+"_"+type+"_"+paper}, "*");
+		paperURI = subject+"/"+subjectCode+"_"+session+year+"_"+type;
 		
-		if(type == "qm"){
-			openDoubleURL(openInNewTab, URL+"qp_"+paper+".pdf", URL+"ms_"+paper+".pdf");
+		if(type != "er" && type != "gt"){
+			var paper = getValue("paper");
+			var variant = getValue("variant");
+			
+			if(variant!=0 && ((exam=="OLevel" && year>9) || (exam!="OLevel" && (year > 9 || (year == 9 && session == 'w')))))
+				paper += ""+variant;
+			
+			paperURI += "_"+paper;
 		}
-		else{
-			openSingleURL(openInNewTab, URL+type+"_"+paper+".pdf");
-		}
+		
+		paperURL = baseXP + paperURI + ".pdf";
 	}
 }
 
-function openSingleURL(openInNewTab,url){
-	if(openInNewTab){
-		window.open(url , '_blank');
+function updateURL(){
+	var endPos = document.URL.indexOf("?");
+	if(endPos==-1)
+		endPos = document.URL.length;
+	var pageUrl = document.URL.substring(document.URL.lastIndexOf("/"),endPos);
+	
+	if(LHPaperURI != "" && RHPaperURI != ""){
+		top.postMessage({updateUri: pageUrl+"?_"+extractPaperCode(LHPaperURI)+"__"+extractPaperCode(RHPaperURI)}, "*");
+	}else
+		top.postMessage({updateUri: pageUrl+"?_"+extractPaperCode(paperURI)}, "*");
+}
+	
+function extractPaperCode(paperURI){
+	var index = paperURI.lastIndexOf('/')+1;
+	
+	var paperCode;
+	if(paperURI.length == index){
+		paperCode = paperURI.substr(paperURI.lastIndexOf('(')+1,4);
 	}
 	else{
-		closeHeader()
-		$("#doubleIframe").hide();
-		$("#singleIframe").show();
-		paperFrame.src = url ;
-		paperFrame.style.display = 'block';
-		paperFrame.scrollIntoView(true);
+		paperCode = paperURI.substr(index);
 	}
+	
+	return paperCode;
 }
 
-function openDoubleURL(openInNewTab,url1, url2){
-	if(openInNewTab){
-	   var win1 = window.open(url1, "window1", "width="+(screen.width/2-10)+",height="+(screen.height-120)+",scrollbars=yes");
-	   var win2 = window.open(url2, "window2", "width="+(screen.width/2-10)+",height="+(screen.height-120)+",scrollbars=yes,left="+(screen.width/2+10));
-	   if(!win1 || win1.closed || !win2 || win2.closed){
-		alert("Please allow pop-up blocker to use this feature.");
-		win1.close();
-		win2.close();
-	   }
-	   else{
-		win1.focus();
-		win2.focus();
-	   }
-	}
-	else{
-		closeHeader()
-		$("#singleIframe").hide();
-		$("#doubleIframe").show();
-		paperFrame1.src = url1 ;
-		paperFrame2.src = url2 ;
-		paperFrame1.scrollIntoView(true);
-	}
-
+function openBelow(){
+	closeHeader();
+	clearBothHalfs();
+	evalPaperURL();
+	LHPaperURI = RHPaperURI = "";
+	updateURL();
+	$("#doubleIframe").hide();
+	$("#singleIframe").show();
+	paperFrame.src = paperURL ;
+	paperFrame.style.display = 'block';
+	paperFrame.scrollIntoView(true);
 }
 
-function popOpen(url){
-	window.open(url, "popwindow", "width=780,height=580,scrollbars=yes");
+function openInLH(){
+	closeHeader();
+	evalPaperURL();
+	LHPaperURI = paperURI;
+	updateURL();
+	$("#singleIframe").hide();
+	$("#doubleIframe").show();
+	paperFrame1.src = paperURL ;
+	paperFrame1.style.display = 'block';
+	paperFrame1.scrollIntoView(true);
+}
+
+function openInRH(){
+	closeHeader();
+	evalPaperURL();
+	RHPaperURI = paperURI;
+	updateURL();
+	$("#singleIframe").hide();
+	$("#doubleIframe").show();
+	paperFrame2.src = paperURL ;
+	paperFrame2.style.display = 'block';
+	paperFrame2.scrollIntoView(true);
+}
+
+function clearBothHalfs(){
+	paperFrame1.src = "" ;
+	
+	paperFrame2.src = "" ;
+}
+
+function openInNewTab(){
+	evalPaperURL();
+	window.open(paperURL);
 }
 
 function getValue(inputName){
