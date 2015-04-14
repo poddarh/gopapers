@@ -263,23 +263,6 @@ else if(exam=="OLevel")
 else
 	baseXP = "http://theallpapers.com/papers/CIE/AS_and_ALevel/";
 
-
-var baseSXP;
-if(exam=="IGCSE")
-	baseSXP = "http://theallpapers.com/cambridge-international-examinations/igcse/";
-else if(exam=="OLevel")
-	baseSXP = "http://theallpapers.com/cambridge-international-examinations/olevels/";
-else
-	baseSXP = "http://theallpapers.com/cambridge-international-examinations/alevels/";
-
-
-function getSubjectPage(){
-	var subject = getValue("subject");
-	ga('send', 'event', 'subject-page', 'open', subject);
-	lastGAUpdated = new Date();
-	openSingleURL(false,baseXP);
-}
-
 function changeBoard(board){
 	if(board=="IGCSE")
 		window.window.top.location.href = "http://gopapers.net/igcse.html";
