@@ -42,7 +42,7 @@ $(function() {
 	    });
 	}
 	
-	$.cookie(exam+"-lastUpdate", '4', { expires: 365 });
+	$.cookie(exam+"-lastUpdate", '5', { expires: 365 });
 	
 	ga('create', 'UA-50628663-2', 'auto');
 
