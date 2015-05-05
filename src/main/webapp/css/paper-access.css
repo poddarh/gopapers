@@ -6,6 +6,10 @@ html, body {
 	font-family: 'Open Sans', sans-serif; !important
 }
 
+.donation {
+	padding-left: 30px;
+}
+
 tr, td {
 	padding:0;
 }

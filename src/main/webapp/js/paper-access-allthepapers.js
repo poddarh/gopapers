@@ -205,8 +205,11 @@ $(function() {
 		});
 		
     });
-	
+
 	$( ".radio" ).buttonset();
+	$( ".select" ).selectmenu({
+	  width: 150
+	});
 	$( "input[type=submit], .button, button" ).button();
 	paperFrame = document.getElementById("paperFrame");
 	paperFrame1 = document.getElementById("paperFrame1");
