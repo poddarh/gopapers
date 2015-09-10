@@ -27,7 +27,7 @@ var pageURI = "/igcse.html";
 var pageTitle = "IGCSE";
 
 </script>
-<script src="js/paper-access-allthepapers.js"></script>
+<script src="js/paper-access.js"></script>
 
 </head>
 <body style="width:100%;padding:0%;margin:0%">
@@ -45,7 +45,7 @@ var pageTitle = "IGCSE";
 </div>
 <div id="update-message" title="Update" style="display:none">
   <p> <span class="ui-icon ui-icon-circle-check" style="float:left; margin:3px 7px 190px 0;"></span>
-  Now uses theallpapers.com for papers instead of xtremepapers.com till its repaired!
+  Added 2014 and 2015 papers support. Now using xtremepapers.net for papers.
   </p>
 </div>
 
@@ -111,8 +111,12 @@ var pageTitle = "IGCSE";
                   <label for="radio_year_11">2011</label>
                   <input type="radio" id="radio_year_12" name="year" value="12">
                   <label for="radio_year_12">2012</label>
-                  <input type="radio" id="radio_year_13" name="year" value="13" checked="checked">
+                  <input type="radio" id="radio_year_13" name="year" value="13">
                   <label for="radio_year_13">2013</label>
+                  <input type="radio" id="radio_year_14" name="year" value="14">
+                  <label for="radio_year_14">2014</label>
+                  <input type="radio" id="radio_year_15" name="year" value="15" checked="checked">
+                  <label for="radio_year_15">2015</label>
                 </div></td>
             </tr>
             <tr>
@@ -175,9 +179,7 @@ var pageTitle = "IGCSE";
             </tr>
           </table>
           <br />
-  <table>
-	<tr>
-		<td>
+
 			<fieldset id="openInContainer">
 			  <legend id="openIn">Open in...</legend>
 			  <table cellspacing="8">
@@ -191,30 +193,7 @@ var pageTitle = "IGCSE";
 				</tr>
 			  </table>
 			</fieldset>
-		</td>
-		<td>
-		<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" class="donation">
-			<input type="hidden" name="cmd" value="_s-xclick">
-			<table>
-			<tr><td><input type="hidden" name="on0" value="Amount"></td></tr><tr><td>
-				<select name="os0" class="select">
-				<option value="$ 1.00">$1.00 USD</option>
-				<option value="$ 2.50">$2.50 USD</option>
-				<option value="$ 5.00">$5.00 USD</option>
-				<option value="$ 10.00">$10.00 USD</option>
-				<option value="$ 20.00">$20.00 USD</option>
-			</select> </td></tr>
-			</table>
-			<input type="hidden" name="currency_code" value="USD">
-			<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----MIIIYQYJKoZIhvcNAQcEoIIIUjCCCE4CAQExggEwMIIBLAIBADCBlDCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20CAQAwDQYJKoZIhvcNAQEBBQAEgYCk41riVCLXxzmVQiwaG36c4vhxov/JoA9iCmBNr/NWuhgGAW+9R7OdLMGi885WFKPTMjiVRGJIdMQH2AWxE96gmHIYRMvLdwecx4E0km/LRuGDiRnfQtsO0UaS0gq3PzEgZBn9THil3BAbPt8Nv4zBrDjU7H86ZGCLZtDY81rYBjELMAkGBSsOAwIaBQAwggHdBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECAXeS6nme2aigIIBuPIJvQyEXO4iCaP1D7S3+oFe4U8xq/iwHVEq1dm6fBDge0xARK/EP7R0rhnwbt2TN/zi9lMXNiOHcxWnx9HzrDpS+D6M2W0Y3hAYd9LTnAGk6ViZBSr+CglkptP3LwQ0l3m+PbpvPIfh/lKNFepj3wVf/OwxJH1ntrlvB1RvwxnDlJpDAb7BqptfDwkKSh1gqAiKZTF63aTeIeh17484mXs2hBIB+OgzAPwLjcIgAhBHhi7j3uH6oAyVau91XWhbecRKS4aTtpVvH+ORIdRBm5gdYIQ7iQxr3hHH/8xIWMRm3HA75Zw1Or7P25822flvtKuE5tZ+WIryBYkNiXaNZGNEKthCM2B68KUy5Y+K3mrlwo67TysDUvxtmy2UE0Vx+l6WmXrcp6R2dtojJFy1A6c58JjNMAVD219yonjKT199DpujKlr9AWo7kL9og6o2hBAGJQgQ5WCoxtz7ZxXcsX7YM0bBebsdvIqSj/VVXmnsKziFyPPMk83ksIxRFPRJWQbhGoprDBWzrLV+p3nzPdVOeKXilHOMV6faXhVqFpfEazKCZfBSf+aw3p7UETUHDjuW6qPs4JuaoIIDhzCCA4MwggLsoAMCAQICAQAwDQYJKoZIhvcNAQEFBQAwgY4xCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDQTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEUMBIGA1UEChMLUGF5UGFsIEluYy4xEzARBgNVBAsUCmxpdmVfY2VydHMxETAPBgNVBAMUCGxpdmVfYXBpMRwwGgYJKoZIhvcNAQkBFg1yZUBwYXlwYWwuY29tMB4XDTA0MDIxMzEwMTMxNVoXDTM1MDIxMzEwMTMxNVowgY4xCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDQTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEUMBIGA1UEChMLUGF5UGFsIEluYy4xEzARBgNVBAsUCmxpdmVfY2VydHMxETAPBgNVBAMUCGxpdmVfYXBpMRwwGgYJKoZIhvcNAQkBFg1yZUBwYXlwYWwuY29tMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDBR07d/ETMS1ycjtkpkvjXZe9k+6CieLuLsPumsJ7QC1odNz3sJiCbs2wC0nLE0uLGaEtXynIgRqIddYCHx88pb5HTXv4SZeuv0Rqq4+axW9PLAAATU8w04qqjaSXgbGLP3NmohqM6bV9kZZwZLR/klDaQGo1u9uDb9lr4Yn+rBQIDAQABo4HuMIHrMB0GA1UdDgQWBBSWn3y7xm8XvVk/UtcKG+wQ1mSUazCBuwYDVR0jBIGzMIGwgBSWn3y7xm8XvVk/UtcKG+wQ1mSUa6GBlKSBkTCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb22CAQAwDAYDVR0TBAUwAwEB/zANBgkqhkiG9w0BAQUFAAOBgQCBXzpWmoBa5e9fo6ujionW1hUhPkOBakTr3YCDjbYfvJEiv/2P+IobhOGJr85+XHhN0v4gUkEDI8r2/rNk1m0GA8HKddvTjyGw/XqXa+LSTlDYkqI8OwR8GEYj4efEtcRpRYBxV8KxAW93YDWzFGvruKnnLbDAF6VR5w/cCMn5hzGCAZowggGWAgEBMIGUMIGOMQswCQYDVQQGEwJVUzELMAkGA1UECBMCQ0ExFjAUBgNVBAcTDU1vdW50YWluIFZpZXcxFDASBgNVBAoTC1BheVBhbCBJbmMuMRMwEQYDVQQLFApsaXZlX2NlcnRzMREwDwYDVQQDFAhsaXZlX2FwaTEcMBoGCSqGSIb3DQEJARYNcmVAcGF5cGFsLmNvbQIBADAJBgUrDgMCGgUAoF0wGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMTUwNTA1MDg0NDEyWjAjBgkqhkiG9w0BCQQxFgQU63IZKntqV0n1U/qUmWSMoc2KwaAwDQYJKoZIhvcNAQEBBQAEgYCPngsNNQGDfa5NbHQvmuxbpSm6zxnYU9snnCYPtsNeW5vwI6r/uqEQPIs6FpymuF1KWfljkqtm3Ws+cPmhOidlE2J7TpUgL3n6CM3bvqtyBB39cG2eayofaKc4PmJtn4WHGKQzOwI2gW0RpbanU8PMBKiNNZOizYl89DjD1RxvhA==-----END PKCS7-----
-			">
-			<input type="image" src="http://www.kentrozois.gr/wp-content/uploads/2013/09/donate.png" border="0" name="submit" width="154px" alt="PayPal - The safer, easier way to pay online!">
-			<img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
-		</form>
-
-		</td>
-	</tr>
-  </table>
+      
           <br/>
           <span style="font-size: 18px"> Developed by <a style="color:blue" href="http://fb.com/poddarh" target="_new" class="link">Harsh Poddar</a> | Please give feedback and suggestions by clicking <a style="color:blue" href="javascript:void(0); popOpen('http://1drv.ms/1h6ZZkc')" target="_new" >here</a> </span> <br/>
         </div>
