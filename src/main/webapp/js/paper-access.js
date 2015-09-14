@@ -405,3 +405,7 @@ function set(fields){
 		setValue(key, value);
 	});
 }
+
+function popOpen(url){
+        window.open(url, "popwindow", "width=780,height=580,scrollbars=yes");
+}
