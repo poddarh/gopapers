@@ -65,16 +65,19 @@ iframe{
 #openFull span{
 	background-color:#D9D9D9;
 }
-#openNewTab{
+#openNewTab, #downloadButton{
 	margin-left:15px;
 	height:100%;
 	width:100%;
+}
+#downloadButton{
+	padding-top: 23px;
 }
 #openIn{
 	font-size:18px;
 }
 #openInContainer{
-	width: 425px;
+	width: 540px;
 	padding-right: 0px;
 	padding-bottom: 5px;
 	padding-left: 5px;

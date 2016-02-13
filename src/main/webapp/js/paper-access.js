@@ -30,7 +30,7 @@ $(function() {
 	var paper = {params:{}};
 	var paper2 = {params:{}};
 	
-	if($.cookie(exam+"-lastUpdate")==null || $.cookie(exam+"-lastUpdate") < 4){
+	if($.cookie(exam+"-lastUpdate")==null || $.cookie(exam+"-lastUpdate") < 7){
 		$( "#update-message" ).dialog({
 	      modal: true,
 	      width: '500px',
@@ -42,7 +42,7 @@ $(function() {
 	    });
 	}
 	
-	$.cookie(exam+"-lastUpdate", '6', { expires: 365 });
+	$.cookie(exam+"-lastUpdate", '7', { expires: 365 });
 	
 	ga('create', 'UA-50628663-2', 'auto');
 
@@ -207,10 +207,11 @@ $(function() {
     });
 	
 	$( ".radio" ).buttonset();
-	$( "input[type=submit], .button, button" ).button();
+	$( "input[type=submit], .button, button, a[id=downloadButton]" ).button();
 	paperFrame = document.getElementById("paperFrame");
 	paperFrame1 = document.getElementById("paperFrame1");
 	paperFrame2 = document.getElementById("paperFrame2");
+	downloadButton = document.getElementById("downloadButton");
 		
 	setInterval(function () {
         if(new Date().getTime()-lastGAUpdated.getTime()>1500000){
@@ -343,13 +344,15 @@ function openBelow(){
 	closeHeader();
 	clearBothHalfs();
 	evalPaperURL();
-	LHPaperURI = RHPaperURI = "";
-	updateURL();
-	$("#doubleIframe").hide();
-	$("#singleIframe").show();
 	paperFrame.src = paperURL ;
 	paperFrame.style.display = 'block';
 	paperFrame.scrollIntoView(true);
+}
+
+function downloadPDF(){
+	evalPaperURL();
+	downloadButton.href = paperURL ;
+	return true;
 }
 
 function openInLH(){

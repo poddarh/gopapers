@@ -43,9 +43,9 @@ var pageTitle = "O Level";
 </div>
 <div id="update-message" title="Update" style="display:none">
   <p> <span class="ui-icon ui-icon-circle-check" style="float:left; margin:3px 7px 190px 0;"></span>
-  Added 2014 and 2015 papers support. Now using xtremepapers.net for papers.<br/>
+  NEW: A download button that lets you download the past papers<br/>
   <br/>
-  Also repaired the feedback and suggestions link. and I request you to make use of it. Maybe you want to see some new features or have complaints, please do let me know :)
+  I hope you find this website useful and please leave feedback and suggestions. I check it on regular basis and add features as users ask for them :)
 </p>
 </div>
 
@@ -168,6 +168,7 @@ var pageTitle = "O Level";
 				<tr>
 				  <td colspan="2"><button id="openFull" onclick="openBelow()" >Full Window</button></td>
 				  <td rowspan="2"><button id="openNewTab" onclick="openInNewTab()" >New tab</button></td>
+          <td rowspan="2"><a href="#" id="downloadButton" onclick="downloadPDF()" download >Download</a></td>
 				</tr>
 				<tr>
 				  <td><button id="openLH" onclick="openInLH()" >Left Half</button></td>
