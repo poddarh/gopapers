@@ -344,6 +344,10 @@ function openBelow(){
 	closeHeader();
 	clearBothHalfs();
 	evalPaperURL();
+	LHPaperURI = RHPaperURI = "";
+	updateURL();
+	$("#doubleIframe").hide();
+	$("#singleIframe").show();
 	paperFrame.src = paperURL ;
 	paperFrame.style.display = 'block';
 	paperFrame.scrollIntoView(true);
