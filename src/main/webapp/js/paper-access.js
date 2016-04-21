@@ -30,7 +30,7 @@ $(function() {
 	var paper = {params:{}};
 	var paper2 = {params:{}};
 	
-	if($.cookie(exam+"-lastUpdate")==null || $.cookie(exam+"-lastUpdate") < 7){
+	if($.cookie(exam+"-lastUpdate")==null || $.cookie(exam+"-lastUpdate") < 8){
 		$( "#update-message" ).dialog({
 	      modal: true,
 	      width: '500px',
@@ -42,7 +42,7 @@ $(function() {
 	    });
 	}
 	
-	$.cookie(exam+"-lastUpdate", '7', { expires: 365 });
+	$.cookie(exam+"-lastUpdate", '8', { expires: 365 });
 	
 	ga('create', 'UA-50628663-2', 'auto');
 
@@ -257,12 +257,18 @@ $.urlParam = function(name){
 }
 
 var baseXP;
+// if(exam=="IGCSE")
+// 	baseXP = "http://papers.xtremepapers.com/CIE/Cambridge IGCSE/";
+// else if(exam=="OLevel")
+// 	baseXP = "http://papers.xtremepapers.com/CIE/Cambridge International O Level/";
+// else
+// 	baseXP = "http://papers.xtremepapers.com/CIE/Cambridge International A and AS Level/";
 if(exam=="IGCSE")
-	baseXP = "http://papers.xtremepapers.com/CIE/Cambridge IGCSE/";
+	baseXP = "http://theallpapers.com/papers/CIE/IGCSE/";
 else if(exam=="OLevel")
-	baseXP = "http://papers.xtremepapers.com/CIE/Cambridge International O Level/";
+	baseXP = "http://theallpapers.com/papers/CIE/OLevels/";
 else
-	baseXP = "http://papers.xtremepapers.com/CIE/Cambridge International A and AS Level/";
+	baseXP = "http://theallpapers.com/papers/CIE/AS_and_ALevel/";
 
 function getSubjectPage(){
 	var subject = getValue("subject");
