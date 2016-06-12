@@ -30,7 +30,7 @@ $(function() {
 	var paper = {params:{}};
 	var paper2 = {params:{}};
 	
-	if($.cookie(exam+"-lastUpdate")==null || $.cookie(exam+"-lastUpdate") < 9){
+	if($.cookie(exam+"-lastUpdate")==null || $.cookie(exam+"-lastUpdate") < 10){
 		$( "#update-message" ).dialog({
 	      modal: true,
 	      width: '500px',
@@ -42,7 +42,7 @@ $(function() {
 	    });
 	}
 	
-	$.cookie(exam+"-lastUpdate", '9', { expires: 365 });
+	$.cookie(exam+"-lastUpdate", '10', { expires: 365 });
 	
 	ga('create', 'UA-50628663-2', 'auto');
 
