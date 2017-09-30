@@ -25,6 +25,8 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 
 // End Google Analytics
 
+var enableDownload = true;
+
 $(function() {
 
 	var paper = {params:{}};
@@ -228,15 +230,17 @@ $(function() {
 
 	$("input[type='radio'][name='year']").click(function() {
 	    if (this.value > 15) {
-				$("#openLH").prop("disabled",true);
-				$("#openRH").prop("disabled",true);
-				$("#downloadButton").prop("disabled",true);
-				$("#openFull").prop("disabled",true);
+				$("#openLH").button("disable");
+				$("#openRH").button("disable");
+				$("#downloadButton").button("disable");
+				$("#openFull").button("disable");
+				enableDownload = false;
 			} else {
-				$("#openLH").prop("disabled",false);
-				$("#openRH").prop("disabled",false);
-				$("#downloadButton").prop("disabled",false);
-				$("#openFull").prop("disabled",false);
+				$("#openLH").button("enable");
+				$("#openRH").button("enable");
+				$("#downloadButton").button("enable");
+				$("#openFull").button("enable");
+				enableDownload = true;
 			}
 	});
 
@@ -380,7 +384,7 @@ function openBelow(){
 function downloadPDF(){
 	evalPaperURL();
 	downloadButton.href = paperURL ;
-	return true;
+	return enableDownload;
 }
 
 function openInLH(){
