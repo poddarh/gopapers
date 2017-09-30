@@ -317,6 +317,10 @@ function evalPaperURL(){
 		}
 
 		paperURL = baseXP + paperURI + ".pdf";
+
+		if (year > 15) {
+			paperURL = "https://duckduckgo.com/?q=\\\"" + extractPaperCode(paperURI) + "\" f:pdf"
+		}
 	}
 }
 
