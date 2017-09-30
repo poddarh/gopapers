@@ -226,6 +226,20 @@ $(function() {
 		toggleHeader()
 	});
 
+	$("input[type='radio'][name='year']").click(function() {
+	    if (this.value > 15) {
+				$("#openLH").prop("disabled",true);
+				$("#openRH").prop("disabled",true);
+				$("#downloadButton").prop("disabled",true);
+				$("#openFull").prop("disabled",true);
+			} else {
+				$("#openLH").prop("disabled",false);
+				$("#openRH").prop("disabled",false);
+				$("#downloadButton").prop("disabled",false);
+				$("#openFull").prop("disabled",false);
+			}
+	});
+
 });
 
 function toggleHeader(){
