@@ -297,11 +297,11 @@ function getSubjectPage(){
 
 function changeBoard(board){
 	if(board=="IGCSE")
-		window.window.top.location.href = "http://gopapers.net/igcse.html";
+		window.top.location.href = window.location.origin + "/igcse.html";
 	else if(board=="OLevel")
-		window.window.top.location.href = "http://gopapers.net/olevel.html";
+		window.top.location.href = window.location.origin + "/olevel.html";
 	else
-		window.window.top.location.href = "http://gopapers.net/alevel.html";
+		window.top.location.href = window.location.origin + "/alevel.html";
 }
 
 function evalPaperURL(){
