@@ -66,12 +66,8 @@ iframe{
 	background-color:#D9D9D9;
 }
 #openNewTab, #downloadButton{
-	margin-left:15px;
 	height:100%;
 	width:100%;
-}
-#downloadButton{
-	padding-top: 23px;
 }
 #openIn{
 	font-size:18px;
