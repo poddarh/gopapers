@@ -32,7 +32,7 @@ $(function() {
 	var paper = {params:{}};
 	var paper2 = {params:{}};
 
-	if($.cookie(exam+"-lastUpdate")==null || $.cookie(exam+"-lastUpdate") < 11){
+	if($.cookie(exam+"-lastUpdate")==null || $.cookie(exam+"-lastUpdate") < 12){
 		$( "#update-message" ).dialog({
 	      modal: true,
 	      width: '500px',
@@ -44,7 +44,7 @@ $(function() {
 	    });
 	}
 
-	$.cookie(exam+"-lastUpdate", '11', { expires: 365 });
+	$.cookie(exam+"-lastUpdate", '12', { expires: 365 });
 
 	ga('create', 'UA-50628663-2', 'auto');
 
@@ -230,12 +230,14 @@ $(function() {
 
 	$("input[type='radio'][name='year']").click(function() {
 	    if (this.value > 15) {
+				$("#radio_session_m").button("enable");
 				$("#openLH").button("disable");
 				$("#openRH").button("disable");
 				$("#downloadButton").button("disable");
 				$("#openFull").button("disable");
 				enableDownload = false;
 			} else {
+				$("#radio_session_m").button("disable");
 				$("#openLH").button("enable");
 				$("#openRH").button("enable");
 				$("#downloadButton").button("enable");
@@ -243,6 +245,7 @@ $(function() {
 				enableDownload = true;
 			}
 	});
+	$("#radio_session_m").button("disable");
 
 });
 
